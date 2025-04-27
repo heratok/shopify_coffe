@@ -1,3 +1,48 @@
-.angular
-dist
-node_modules
+# Archivos generados por Angular CLI
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Dependencias
+/node_modules
+/.angular/cache
+
+# Archivos de entorno (pueden variar según el proyecto)
+/.env
+/.env.local
+/.env.*.local
+
+# Archivos de configuración de IDEs y editores
+/.idea
+/.vscode
+/.settings
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archivos de depuración
+/logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de testing
+/coverage
+/karma-coverage
+
+# Archivos de compilación y paquetes
+*.js.map
+*.d.ts
+*.tgz
+
+# Archivos específicos de Angular
+/src/environments/environment.ts
+/src/environments/environment.prod.ts
