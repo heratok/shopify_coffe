@@ -1,19 +1,31 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { User } from '../models/user.model';
-import { delay, tap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { Observable, from, BehaviorSubject, tap } from "rxjs";
+import { SupabaseService } from "./supabase.service";
+import { User } from "../models/user.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  
-  constructor() {
-    // Check if user is logged in from local storage
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      this.currentUserSubject.next(JSON.parse(user));
+
+  constructor(private supabaseService: SupabaseService) {
+    this.initializeUser();
+  }
+
+  private async initializeUser() {
+    const session = await this.supabaseService.getSession();
+    if (session) {
+      const userData = session.user;
+      this.currentUserSubject.next({
+        id: userData.id,
+        email: userData.email || "",
+        firstName:
+          (userData.user_metadata as { first_name?: string })?.first_name || "",
+        lastName:
+          (userData.user_metadata as { last_name?: string })?.last_name || "",
+        isAuthenticated: true,
+      });
     }
   }
 
@@ -22,54 +34,43 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const user = this.currentUserSubject.value;
-    return !!user && user.isAuthenticated;
+    return !!this.currentUserSubject.value;
   }
 
-  login(email: string, password: string): Observable<User> {
-    // This is a mock implementation. In a real app, this would call an API
-    if (email === 'user@example.com' && password === 'password') {
-      const user: User = {
-        id: '1',
-        email: email,
-        firstName: 'John',
-        lastName: 'Doe',
-        isAuthenticated: true
-      };
-      
-      return of(user).pipe(
-        delay(1000), // Simulate API delay
-        tap(user => {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        })
-      );
-    }
-    
-    return throwError(() => new Error('Invalid email or password'));
-  }
-
-  register(email: string, password: string, firstName: string, lastName: string): Observable<User> {
-    // This is a mock implementation. In a real app, this would call an API
-    const user: User = {
-      id: '1',
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      isAuthenticated: true
-    };
-    
-    return of(user).pipe(
-      delay(1000), // Simulate API delay
-      tap(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
+  login(email: string, password: string): Observable<any> {
+    return from(this.supabaseService.signIn(email, password)).pipe(
+      tap(({ user }) => {
+        if (user) {
+          this.currentUserSubject.next({
+            id: user.id,
+            email: user.email || "",
+            firstName:
+              (user.user_metadata as { first_name?: string })?.first_name || "",
+            lastName:
+              (user.user_metadata as { last_name?: string })?.last_name || "",
+            isAuthenticated: true,
+          });
+        }
       })
     );
   }
 
-  logout(): void {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+  register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ): Observable<any> {
+    return from(
+      this.supabaseService.signUp(email, password, firstName, lastName)
+    );
+  }
+
+  logout(): Observable<void> {
+    return from(this.supabaseService.signOut()).pipe(
+      tap(() => {
+        this.currentUserSubject.next(null);
+      })
+    );
   }
 }

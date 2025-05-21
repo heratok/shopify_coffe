@@ -87,7 +87,13 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
       <div class="container">
         <div class="about-content">
           <div class="about-image">
-            <img src="https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg" alt="Coffee roasting process">
+            <img 
+              src="https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg" 
+              alt="Coffee roasting process"
+              width="600" 
+              height="400"
+              loading="lazy"
+            >
           </div>
           <div class="about-text">
             <h2>Our Coffee Story</h2>

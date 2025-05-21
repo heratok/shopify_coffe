@@ -39,17 +39,17 @@ import { Cart } from '../../../core/models/cart-item.model';
               <span class="icon">👤</span>
             </a>
           </div>
-          <div class="user-icon" *ngIf="currentUser" [class.active]="userMenuOpen" (click)="toggleUserMenu()">
-            <span class="icon">👤</span>
+          <div class="user-icon" *ngIf="currentUser" [class.active]="userMenuOpen" (click)="toggleUserMenu($event)">
+            <span class="icon">👑</span>
             <div class="user-dropdown" *ngIf="userMenuOpen">
               <div class="user-info">
                 <p>{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
                 <small>{{ currentUser.email }}</small>
               </div>
               <ul>
-                <li><a routerLink="/profile">My Account</a></li>
-                <li><a routerLink="/orders">My Orders</a></li>
-                <li><a (click)="logout()">Logout</a></li>
+                <li><a routerLink="/profile">Mi Cuenta</a></li>
+                <li><a routerLink="/orders">Mis Pedidos</a></li>
+                <li><a (click)="logout()">Cerrar Sesión</a></li>
               </ul>
             </div>
           </div>
@@ -347,8 +347,20 @@ export class HeaderComponent implements OnInit {
     this.userMenuOpen = false;
   }
 
-  toggleUserMenu() {
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const userIcon = (event.target as HTMLElement).closest('.user-icon');
+    const userDropdown = (event.target as HTMLElement).closest('.user-dropdown');
+    
+    if (!userIcon && !userDropdown) {
+      this.userMenuOpen = false;
+    }
+  }
+
+  toggleUserMenu(event: Event) {
+    event.stopPropagation(); // Evitar que el clic se propague al documento
     this.userMenuOpen = !this.userMenuOpen;
+    this.searchOpen = false;
   }
 
   toggleMobileMenu() {
@@ -365,7 +377,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
-    this.userMenuOpen = false;
+    this.authService.logout().subscribe(() => {
+      this.userMenuOpen = false;
+      this.router.navigate(['/']);
+    });
   }
 }
