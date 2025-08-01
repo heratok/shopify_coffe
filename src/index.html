@@ -7,8 +7,18 @@
     <meta name="description" content="Premium coffee shop with the finest beans and brewing methods" />
     <base href="/">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#5D4037">
   </head>
   <body>
-    <app-root>Loading your coffee experience...</app-root>
+    <app-root>
+      <div class="app-loading">
+        <div class="logo">
+          <div class="coffee-cup"></div>
+        </div>
+        <h2>Brew Haven Coffee Shop</h2>
+        <div class="spinner"></div>
+      </div>
+    </app-root>
   </body>
 </html>

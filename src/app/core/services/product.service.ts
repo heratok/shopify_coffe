@@ -12,7 +12,13 @@ export class ProductService {
   constructor() { }
 
   getProducts(): Observable<Product[]> {
-    return of(this.products);
+    // Agregamos un delay artificial para mostrar el skeleton loader
+    return new Observable<Product[]>(observer => {
+      setTimeout(() => {
+        observer.next(this.products);
+        observer.complete();
+      }, 1500); // 1.5 segundos de delay
+    });
   }
 
   getProductById(id: string): Observable<Product | undefined> {

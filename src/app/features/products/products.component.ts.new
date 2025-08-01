@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
 import { Product } from '../../core/models/product.model';
@@ -13,6 +15,8 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
+    RouterLink,
     ProductCardComponent,
     ProductCardSkeletonComponent,
     HeaderComponent,
@@ -112,6 +116,10 @@ export class ProductsComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    this.cartService.addToCart(product, 1);
+    this.cartService.addToCart({
+      productId: product.id,
+      quantity: 1,
+      product: product
+    });
   }
 }
