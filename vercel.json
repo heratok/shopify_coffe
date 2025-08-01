@@ -1,12 +1,13 @@
 {
     "version": 2,
-    "framework": "angular",
     "builds": [
         {
             "src": "package.json",
-            "use": "@vercel/angular",
+            "use": "@vercel/static-build",
             "config": {
-                "outputDirectory": "dist/demo/browser"
+                "buildCommand": "npm run vercel-build",
+                "outputDirectory": "dist/demo/browser",
+                "framework": "angular"
             }
         }
     ],

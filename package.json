@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "dev": "ng serve",
-    "build": "npm run clean && ng build --configuration production",
+    "build": "ng build --configuration production",
+    "vercel-build": "ng build --configuration production",
     "clean": "if exist dist rmdir /s /q dist",
     "clean:deps": "if exist node_modules rmdir /s /q node_modules && if exist package-lock.json del package-lock.json"
   },
