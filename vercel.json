@@ -1,11 +1,11 @@
 {
     "version": 2,
+    "framework": "angular",
     "builds": [
         {
             "src": "package.json",
-            "use": "@vercel/static-build",
+            "use": "@vercel/angular",
             "config": {
-                "buildCommand": "npm run build",
                 "outputDirectory": "dist/demo/browser"
             }
         }
@@ -13,19 +13,34 @@
     "routes": [
         {
             "src": "/assets/(.*)",
+            "headers": {
+                "cache-control": "public, max-age=31536000, immutable"
+            },
             "dest": "/assets/$1"
         },
         {
             "src": "/manifest.webmanifest",
+            "headers": {
+                "cache-control": "public, max-age=0, must-revalidate"
+            },
             "dest": "/manifest.webmanifest"
         },
         {
             "src": "/ngsw-worker.js",
+            "headers": {
+                "cache-control": "public, max-age=0, must-revalidate"
+            },
             "dest": "/ngsw-worker.js"
         },
         {
-            "src": "/(.*)",
+            "src": "^/[^.]+$",
+            "headers": {
+                "cache-control": "public, max-age=0, must-revalidate"
+            },
             "dest": "/index.html"
+        },
+        {
+            "handle": "filesystem"
         }
     ]
 }
