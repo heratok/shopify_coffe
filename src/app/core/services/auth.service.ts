@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, from, BehaviorSubject, tap } from "rxjs";
-import { SupabaseService } from "./supabase.service";
+import { Observable, BehaviorSubject } from "rxjs";
 import { User } from "../models/user.model";
 
 @Injectable({
@@ -9,24 +8,8 @@ import { User } from "../models/user.model";
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
 
-  constructor(private supabaseService: SupabaseService) {
-    this.initializeUser();
-  }
-
-  private async initializeUser() {
-    const session = await this.supabaseService.getSession();
-    if (session) {
-      const userData = session.user;
-      this.currentUserSubject.next({
-        id: userData.id,
-        email: userData.email || "",
-        firstName:
-          (userData.user_metadata as { first_name?: string })?.first_name || "",
-        lastName:
-          (userData.user_metadata as { last_name?: string })?.last_name || "",
-        isAuthenticated: true,
-      });
-    }
+  constructor() {
+    // Eliminar lógica relacionada con Supabase
   }
 
   getCurrentUser(): Observable<User | null> {
@@ -38,21 +21,21 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return from(this.supabaseService.signIn(email, password)).pipe(
-      tap(({ user }) => {
-        if (user) {
-          this.currentUserSubject.next({
-            id: user.id,
-            email: user.email || "",
-            firstName:
-              (user.user_metadata as { first_name?: string })?.first_name || "",
-            lastName:
-              (user.user_metadata as { last_name?: string })?.last_name || "",
-            isAuthenticated: true,
-          });
-        }
-      })
-    );
+    return new Observable((observer) => {
+      // Lógica de inicio de sesión simulada
+      setTimeout(() => {
+        const user = {
+          id: "1",
+          email: email,
+          firstName: "John",
+          lastName: "Doe",
+          isAuthenticated: true,
+        };
+        this.currentUserSubject.next(user);
+        observer.next(user);
+        observer.complete();
+      }, 1000);
+    });
   }
 
   register(
@@ -61,16 +44,31 @@ export class AuthService {
     firstName: string,
     lastName: string
   ): Observable<any> {
-    return from(
-      this.supabaseService.signUp(email, password, firstName, lastName)
-    );
+    return new Observable((observer) => {
+      // Lógica de registro simulada
+      setTimeout(() => {
+        const user = {
+          id: "1",
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          isAuthenticated: true,
+        };
+        this.currentUserSubject.next(user);
+        observer.next(user);
+        observer.complete();
+      }, 1000);
+    });
   }
 
   logout(): Observable<void> {
-    return from(this.supabaseService.signOut()).pipe(
-      tap(() => {
+    return new Observable((observer) => {
+      // Lógica de cierre de sesión simulada
+      setTimeout(() => {
         this.currentUserSubject.next(null);
-      })
-    );
+        observer.next();
+        observer.complete();
+      }, 1000);
+    });
   }
 }
