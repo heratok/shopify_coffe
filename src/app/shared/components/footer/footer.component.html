@@ -1,0 +1,60 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section about">
+        <h3 class="logo">Brew Haven</h3>
+        <p>
+          Premium coffee shop offering the finest selection of coffee beans 
+          from around the world, crafted with passion and expertise.
+        </p>
+        <div class="contact">
+          <p><span>📍</span> 123 Coffee Street, Bean City</p>
+          <p><span>📞</span> +1 (555) 123-4567</p>
+          <p><span>✉️</span> info&#64;brewhaven.com</p>
+        </div>
+        <div class="socials">
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="Twitter">TW</a>
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Pinterest">PI</a>
+        </div>
+      </div>
+      <div class="footer-section links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/products">Shop</a></li>
+          <li><a routerLink="/about">About Us</a></li>
+          <li><a routerLink="/contact">Contact</a></li>
+          <li><a routerLink="/blog">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-section categories">
+        <h3>Categories</h3>
+        <ul>
+          <li><a routerLink="/products/category/single-origin">Single Origin</a></li>
+          <li><a routerLink="/products/category/blends">Blends</a></li>
+          <li><a routerLink="/products/category/espresso">Espresso</a></li>
+          <li><a routerLink="/products/category/decaf">Decaf</a></li>
+          <li><a routerLink="/products/category/subscriptions">Subscriptions</a></li>
+        </ul>
+      </div>
+      <div class="footer-section newsletter">
+        <h3>Subscribe to Our Newsletter</h3>
+        <p>Stay updated with our latest offers and coffee tips.</p>
+        <form (submit)="$event.preventDefault(); subscribeToNewsletter()">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit" class="btn">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} Brew Haven Coffee Shop. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a routerLink="/privacy-policy">Privacy Policy</a>
+        <a routerLink="/terms-of-service">Terms of Service</a>
+        <a routerLink="/shipping-info">Shipping Information</a>
+      </div>
+    </div>
+  </div>
+</footer>

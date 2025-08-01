@@ -1,0 +1,26 @@
+<app-header></app-header>
+<main class="products-page">
+  <div class="products-hero">
+    <div class="container">
+      <h1>Our Coffee Collection</h1>
+      <p>Discover premium coffee beans from around the world</p>
+
+      <div class="products-grid">
+        <!-- Loading skeletons -->
+        <ng-container *ngIf="loading">
+          <app-product-card-skeleton *ngFor="let i of [1,2,3,4,5,6]"></app-product-card-skeleton>
+        </ng-container>
+
+        <!-- Actual products -->
+        <ng-container *ngIf="!loading">
+          <app-product-card
+            *ngFor="let product of products"
+            [product]="product"
+            (addToCart)="addToCart($event)">
+          </app-product-card>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>

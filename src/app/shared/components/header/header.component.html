@@ -1,0 +1,57 @@
+<header [class.scrolled]="scrolled" class="header">
+  <div class="container header-container">
+    <div class="logo">
+      <a routerLink="/">
+        <h1>Brew Haven</h1>
+      </a>
+    </div>
+    <nav class="main-nav" [class.active]="mobileMenuOpen">
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+        <li><a routerLink="/products" routerLinkActive="active">Shop</a></li>
+        <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+        <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <div class="search-icon" (click)="toggleSearch()">
+        <span class="icon">🔍</span>
+      </div>
+      <div class="cart-icon" (click)="toggleCart()">
+        <span class="icon">🛒</span>
+        <span class="badge" *ngIf="cart && cart.items.length > 0">{{ getTotalItems() }}</span>
+      </div>
+      <div class="user-icon" *ngIf="!currentUser">
+        <a routerLink="/auth/login">
+          <span class="icon">👤</span>
+        </a>
+      </div>
+      <div class="user-icon" *ngIf="currentUser" [class.active]="userMenuOpen" (click)="toggleUserMenu($event)">
+        <span class="icon">👑</span>
+        <div class="user-dropdown" *ngIf="userMenuOpen">
+          <div class="user-info">
+            <p>{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
+            <small>{{ currentUser.email }}</small>
+          </div>
+          <ul>
+            <li><a routerLink="/profile">Mi Cuenta</a></li>
+            <li><a routerLink="/orders">Mis Pedidos</a></li>
+            <li><a (click)="logout()">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <div class="search-bar" [class.active]="searchOpen">
+    <div class="container">
+      <input type="text" placeholder="Search for coffee..." #searchInput>
+      <button class="btn-search">Search</button>
+      <button class="btn-close" (click)="toggleSearch()">✕</button>
+    </div>
+  </div>
+</header>

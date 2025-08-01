@@ -18,71 +18,8 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
     HeaderComponent,
     FooterComponent
   ],
-  template: `
-    <app-header></app-header>
-    <main class="products-page">
-      <div class="products-hero">
-        <div class="container">
-          <h1>Our Coffee Collection</h1>
-          <p>Discover premium coffee beans from around the world</p>
-
-          <div class="products-grid">
-            <!-- Loading skeletons -->
-            <ng-container *ngIf="loading">
-              <app-product-card-skeleton *ngFor="let i of [1,2,3,4,5,6]"></app-product-card-skeleton>
-            </ng-container>
-
-            <!-- Actual products -->
-            <ng-container *ngIf="!loading">
-              <app-product-card
-                *ngFor="let product of products"
-                [product]="product"
-                (addToCart)="addToCart($event)">
-              </app-product-card>
-            </ng-container>
-          </div>
-        </div>
-      </div>
-    </main>
-    <app-footer></app-footer>
-  `,
-  styles: [`
-    .products-page {
-      min-height: 100vh;
-      padding: 2rem 0;
-    }
-    
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2rem;
-      padding: 2rem 0;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    .products-hero {
-      background: var(--color-primary-light);
-      color: var(--color-white);
-      padding: 4rem 0;
-      text-align: center;
-    }
-
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-  `]
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
   public loading = true;
