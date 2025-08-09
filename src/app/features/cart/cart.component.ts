@@ -37,6 +37,7 @@ export class CartComponent implements OnInit {
       this.loading = false;
     });
   }
+
   
   updateQuantity(productId: string, quantity: number): void {
     this.cartService.updateQuantity(productId, quantity);

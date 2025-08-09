@@ -72,4 +72,9 @@ export class CartService {
   private calculateTotal(items: CartItem[]): number {
     return items.reduce((total, item) => total + (item.product.price * item.quantity), 0);
   }
+
+  getTotal(): number {
+    const cart = this.cartSubject.value;
+    return cart.total ?? 0;
+  }
 }

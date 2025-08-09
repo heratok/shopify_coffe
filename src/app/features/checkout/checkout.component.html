@@ -1,0 +1,35 @@
+<app-header></app-header>
+
+<div class="checkout-page">
+  <div class="container">
+    <h1>Checkout</h1>
+    <div class="checkout-grid">
+      <!-- Left: Order Summary -->
+      <section class="order-summary card">
+        <h2>Order Summary</h2>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>{{ total | number:'1.2-2' }} USD</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span>{{ total > 50 ? 'FREE' : '5.00 USD' }}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>{{ (total + (total > 50 ? 0 : 5)) | number:'1.2-2' }} USD</span>
+        </div>
+        <p class="secure">🔒 Secure payment powered by PayPal</p>
+      </section>
+
+      <!-- Right: Payment -->
+      <section class="payment card">
+        <h2>Payment</h2>
+        <p>Pay safely with PayPal using your balance or card.</p>
+        <div id="paypal-button-container"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

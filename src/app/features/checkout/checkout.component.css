@@ -1,0 +1,57 @@
+.checkout-page {
+    padding-top: var(--header-height);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    padding: var(--space-xl) var(--space-md);
+}
+
+h1 {
+    margin-bottom: var(--space-xl);
+}
+
+.checkout-grid {
+    display: grid;
+    gap: var(--space-xl);
+}
+
+@media (min-width: 992px) {
+    .checkout-grid {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-lg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.summary-row.total {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    border-bottom: none;
+}
+
+.secure {
+    margin-top: var(--space-md);
+    color: var(--color-gray-600);
+    font-size: 0.9rem;
+}
+
+#paypal-button-container {
+    margin-top: var(--space-md);
+}
