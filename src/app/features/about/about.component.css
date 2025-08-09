@@ -1,0 +1,51 @@
+.about-page {
+    padding-top: var(--header-height);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    padding: var(--space-xl) var(--space-md);
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: var(--space-xxl);
+}
+
+.hero h1 {
+    margin-bottom: var(--space-sm);
+}
+
+.grid {
+    display: grid;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xxl);
+}
+
+@media (min-width: 992px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.values {
+    list-style: disc;
+    padding-left: 1.25rem;
+}
+
+.cards {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-lg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.cta {
+    text-align: center;
+}
