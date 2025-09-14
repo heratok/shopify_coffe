@@ -48,6 +48,14 @@ Then, open your browser and go to the URL shown in the terminal (usually `http:/
 - Complete your purchase through the integrated checkout process.
 - Administrators can manage products via the admin panel.
 
+## Deployment
+
+The project is deployed and publicly accessible at:
+
+**[https://shopify-coffe.vercel.app/](https://shopify-coffe.vercel.app/)**
+
+You can visit this link to explore the online store.
+
 ## Contributing
 
 If you want to contribute:
