@@ -1,57 +1,162 @@
-<header [class.scrolled]="scrolled" class="header">
+<header [class.scrolled]="scrolled || !isHomePage" [class.home-page]="isHomePage" class="header" role="banner">
+  <div class="header-backdrop"></div>
   <div class="container header-container">
-    <div class="logo">
-      <a routerLink="/">
-        <h1>Brew Haven</h1>
+    <!-- Logo -->
+    <div class="logo" [@logoAnimation]="scrolled || !isHomePage ? 'scrolled' : 'initial'">
+      <a routerLink="/" class="logo-link" aria-label="Brew Haven Home">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 8H19C20.1046 8 21 8.89543 21 10V12C21 13.1046 20.1046 14 19 14H18M18 8V14M18 8H15M18 14H15M15 8V14M15 8H12C11.4477 8 11 8.44772 11 9V13C11 13.5523 11.4477 14 12 14H15M9 8H6C5.44772 8 5 8.44772 5 9V13C5 13.5523 5.44772 14 6 14H9M3 8V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="logo-text">Brew Haven</span>
       </a>
     </div>
-    <nav class="main-nav" [class.active]="mobileMenuOpen">
-      <ul>
-        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
-        <li><a routerLink="/products" routerLinkActive="active">Shop</a></li>
-        <li><a routerLink="/about" routerLinkActive="active">About</a></li>
-        <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav" [class.active]="mobileMenuOpen" role="navigation" aria-label="Main navigation">
+      <ul class="nav-list">
+        <li class="nav-item" [@navItemAnimation]="'in'">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMobileMenu()">
+            <span class="nav-text">Home</span>
+            <span class="nav-indicator"></span>
+          </a>
+        </li>
+        <li class="nav-item" [@navItemAnimation]="'in'">
+          <a routerLink="/products" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+            <span class="nav-text">Shop</span>
+            <span class="nav-indicator"></span>
+          </a>
+        </li>
+        <li class="nav-item" [@navItemAnimation]="'in'">
+          <a routerLink="/about" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+            <span class="nav-text">About</span>
+            <span class="nav-indicator"></span>
+          </a>
+        </li>
+        <li class="nav-item" [@navItemAnimation]="'in'">
+          <a routerLink="/contact" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+            <span class="nav-text">Contact</span>
+            <span class="nav-indicator"></span>
+          </a>
+        </li>
       </ul>
     </nav>
+
+    <!-- Header Actions -->
     <div class="header-actions">
-      <div class="search-icon" (click)="toggleSearch()">
-        <span class="icon">🔍</span>
-      </div>
-      <div class="cart-icon" (click)="toggleCart()">
-        <span class="icon">🛒</span>
-        <span class="badge" *ngIf="cart && cart.items.length > 0">{{ getTotalItems() }}</span>
-      </div>
-      <div class="user-icon" *ngIf="!currentUser">
-        <a routerLink="/auth/login">
-          <span class="icon">👤</span>
-        </a>
-      </div>
-      <div class="user-icon" *ngIf="currentUser" [class.active]="userMenuOpen" (click)="toggleUserMenu($event)">
-        <span class="icon">👑</span>
-        <div class="user-dropdown" *ngIf="userMenuOpen">
+      <!-- Search -->
+      <button class="action-btn search-icon" (click)="toggleSearch()" aria-label="Search" [attr.aria-expanded]="searchOpen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+          <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <!-- Cart -->
+      <button class="action-btn cart-icon" (click)="toggleCart()" aria-label="Shopping cart">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 6H20L19.5 14H6.5L6 6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+          <circle cx="17" cy="20" r="1.5" fill="currentColor"/>
+          <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="badge" *ngIf="cart && cart.items.length > 0" [@badgeAnimation]="cart.items.length">
+          {{ getTotalItems() }}
+        </span>
+      </button>
+
+      <!-- User - Not Logged In -->
+      <a *ngIf="!currentUser" routerLink="/auth/login" class="action-btn user-icon" aria-label="Login">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 20C4 16 8 14 12 14C16 14 20 16 20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+
+      <!-- User - Logged In -->
+      <div *ngIf="currentUser" class="user-menu-container" [class.active]="userMenuOpen">
+        <button class="action-btn user-icon user-trigger" (click)="toggleUserMenu($event)" aria-label="User menu" [attr.aria-expanded]="userMenuOpen">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+            <path d="M4 20C4 16 8 14 12 14C16 14 20 16 20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="user-name" *ngIf="currentUser.firstName">{{ currentUser.firstName }}</span>
+        </button>
+
+        <!-- User Dropdown -->
+        <div class="user-dropdown" *ngIf="userMenuOpen" role="menu">
           <div class="user-info">
-            <p>{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
-            <small>{{ currentUser.email }}</small>
+            <p class="user-fullname">{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
+            <span class="user-email">{{ currentUser.email }}</span>
           </div>
-          <ul>
-            <li><a routerLink="/profile">Mi Cuenta</a></li>
-            <li><a routerLink="/orders">Mis Pedidos</a></li>
-            <li><a (click)="logout()">Cerrar Sesión</a></li>
+          <ul class="dropdown-list">
+            <li>
+              <a routerLink="/profile" class="dropdown-link" (click)="userMenuOpen = false" role="menuitem">
+                <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                  <path d="M4 20C4 16 8 14 12 14C16 14 20 16 20 20" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>My Account</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/orders" class="dropdown-link" (click)="userMenuOpen = false" role="menuitem">
+                <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="2"/>
+                  <path d="M9 5C9 3.34315 10.3431 2 12 2C13.6569 2 15 3.34315 15 5" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>My Orders</span>
+              </a>
+            </li>
+            <li class="dropdown-divider"></li>
+            <li>
+              <button class="dropdown-link logout-btn" (click)="logout()" role="menuitem">
+                <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2"/>
+                  <path d="M16 17L21 12M21 12L16 7M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Logout</span>
+              </button>
+            </li>
           </ul>
         </div>
       </div>
-      <div class="mobile-menu-toggle" (click)="toggleMobileMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()" aria-label="Toggle menu" [attr.aria-expanded]="mobileMenuOpen">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar" [class.active]="searchOpen" role="search">
+    <div class="container">
+      <div class="search-wrapper">
+        <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none">
+          <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+          <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Search for artisan coffee..." 
+          #searchInput
+          aria-label="Search products">
+        <button class="btn-search" type="button">Search</button>
+        <button class="btn-close" (click)="toggleSearch()" aria-label="Close search">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
     </div>
   </div>
-  <div class="search-bar" [class.active]="searchOpen">
-    <div class="container">
-      <input type="text" placeholder="Search for coffee..." #searchInput>
-      <button class="btn-search">Search</button>
-      <button class="btn-close" (click)="toggleSearch()">✕</button>
-    </div>
-  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-overlay" [class.active]="mobileMenuOpen" (click)="closeMobileMenu()"></div>
 </header>

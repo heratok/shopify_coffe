@@ -1,58 +1,261 @@
 <app-header></app-header>
 
 <div class="contact-page">
-  <div class="container">
-    <section class="hero">
-      <h1>Contact Us</h1>
-      <p>Questions about beans, brewing, or orders? We\'re here to help.</p>
-    </section>
-
-    <div class="grid">
-      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form card">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input id="name" type="text" formControlName="name" class="form-control" [class.is-invalid]="name?.invalid && name?.touched">
-          <div class="invalid-feedback" *ngIf="name?.invalid && name?.touched">
-            <span *ngIf="name?.errors?.['required']">Name is required</span>
-            <span *ngIf="name?.errors?.['minlength']">Name must be at least 2 characters</span>
+  <!-- Editorial Hero -->
+  <section class="contact-hero">
+    <div class="hero-layout">
+      <div class="hero-content">
+        <span class="hero-eyebrow">Get in Touch</span>
+        <h1 class="hero-title">
+          <span class="title-word">Let's</span>
+          <span class="title-word accent">Connect</span>
+        </h1>
+        <p class="hero-description">
+          Whether you have questions about our beans, brewing methods, or just want to say hello—we're here and we love hearing from fellow coffee enthusiasts.
+        </p>
+      </div>
+      <div class="hero-visual">
+        <div class="visual-composition">
+          <div class="composition-frame">
+            <div class="frame-accent"></div>
           </div>
         </div>
-
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input id="email" type="email" formControlName="email" class="form-control" [class.is-invalid]="email?.invalid && email?.touched">
-          <div class="invalid-feedback" *ngIf="email?.invalid && email?.touched">
-            <span *ngIf="email?.errors?.['required']">Email is required</span>
-            <span *ngIf="email?.errors?.['email']">Enter a valid email</span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" rows="5" formControlName="message" class="form-control" [class.is-invalid]="message?.invalid && message?.touched"></textarea>
-          <div class="invalid-feedback" *ngIf="message?.invalid && message?.touched">
-            <span *ngIf="message?.errors?.['required']">Message is required</span>
-            <span *ngIf="message?.errors?.['minlength']">Please provide more details</span>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button class="btn btn-primary" type="submit" [disabled]="isSubmitting || contactForm.invalid">
-            {{ isSubmitting ? 'Sending...' : 'Send Message' }}
-          </button>
-        </div>
-      </form>
-
-      <aside class="contact-info card">
-        <h3>Visit Us</h3>
-        <p>123 Coffee Street, Bean City</p>
-        <h3>Customer Support</h3>
-        <p>Mon–Fri, 9:00–18:00</p>
-        <p>📞 +1 (555) 123-4567</p>
-  <p>✉️ support&#64;brewhaven.com</p>
-      </aside>
+      </div>
     </div>
-  </div>
+    <div class="hero-geometry">
+      <div class="geometry-line"></div>
+      <div class="geometry-circle"></div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="contact-main">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Contact Form - Editorial Layout -->
+        <div class="form-section">
+          <div class="section-header">
+            <span class="section-number">01</span>
+            <h2 class="section-title">Send a Message</h2>
+          </div>
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="editorial-form">
+            <!-- Form Fields -->
+            <div class="form-group" [class.has-error]="name?.invalid && name?.touched">
+              <label for="name">
+                <span class="label-number">01</span>
+                <span class="label-text">Your Name</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  id="name" 
+                  type="text" 
+                  formControlName="name" 
+                  placeholder="How should we address you?"
+                  [class.is-invalid]="name?.invalid && name?.touched">
+                <div class="input-line"></div>
+              </div>
+              <div class="error-message" *ngIf="name?.invalid && name?.touched">
+                <span *ngIf="name?.errors?.['required']">Please tell us your name</span>
+                <span *ngIf="name?.errors?.['minlength']">Name must be at least 2 characters</span>
+              </div>
+            </div>
+
+            <div class="form-group" [class.has-error]="email?.invalid && email?.touched">
+              <label for="email">
+                <span class="label-number">02</span>
+                <span class="label-text">Email Address</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  id="email" 
+                  type="email" 
+                  formControlName="email" 
+                  placeholder="your@email.com"
+                  [class.is-invalid]="email?.invalid && email?.touched">
+                <div class="input-line"></div>
+              </div>
+              <div class="error-message" *ngIf="email?.invalid && email?.touched">
+                <span *ngIf="email?.errors?.['required']">We need your email to respond</span>
+                <span *ngIf="email?.errors?.['email']">Please enter a valid email address</span>
+              </div>
+            </div>
+
+            <div class="form-group" [class.has-error]="subject?.invalid && subject?.touched">
+              <label for="subject">
+                <span class="label-number">03</span>
+                <span class="label-text">Subject</span>
+              </label>
+              <div class="input-wrapper">
+                <select id="subject" formControlName="subject" [class.is-invalid]="subject?.invalid && subject?.touched">
+                  <option value="" disabled>Select a topic</option>
+                  <option value="order">Order Inquiry</option>
+                  <option value="product">Product Question</option>
+                  <option value="brewing">Brewing Advice</option>
+                  <option value="wholesale">Wholesale</option>
+                  <option value="other">Something Else</option>
+                </select>
+                <div class="input-line"></div>
+              </div>
+              <div class="error-message" *ngIf="subject?.invalid && subject?.touched">
+                <span *ngIf="subject?.errors?.['required']">Please select a topic</span>
+              </div>
+            </div>
+
+            <div class="form-group" [class.has-error]="message?.invalid && message?.touched">
+              <label for="message">
+                <span class="label-number">04</span>
+                <span class="label-text">Your Message</span>
+              </label>
+              <div class="input-wrapper textarea-wrapper">
+                <textarea 
+                  id="message" 
+                  formControlName="message" 
+                  rows="5"
+                  placeholder="Tell us what's on your mind..."
+                  [class.is-invalid]="message?.invalid && message?.touched"></textarea>
+                <div class="input-line"></div>
+              </div>
+              <div class="error-message" *ngIf="message?.invalid && message?.touched">
+                <span *ngIf="message?.errors?.['required']">Don't forget your message</span>
+                <span *ngIf="message?.errors?.['minlength']">Please provide more details (at least 10 characters)</span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button 
+                type="submit" 
+                class="submit-btn"
+                [disabled]="isSubmitting || contactForm.invalid"
+                [class.submitting]="isSubmitting">
+                <span class="btn-text">{{ isSubmitting ? 'Sending...' : 'Send Message' }}</span>
+                <span class="btn-icon" *ngIf="!isSubmitting">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                  </svg>
+                </span>
+                <span class="btn-loader" *ngIf="isSubmitting">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Success Message -->
+          <div class="success-message" *ngIf="showSuccess">
+            <div class="success-content">
+              <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <path d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <h3>Message Sent!</h3>
+              <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+              <button class="btn-new-message" (click)="resetForm()">Send Another Message</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Info Cards -->
+        <div class="info-section">
+          <div class="section-header">
+            <span class="section-number">02</span>
+            <h2 class="section-title">Contact Info</h2>
+          </div>
+
+          <div class="info-cards">
+            <div class="info-card" *ngFor="let info of contactInfo; let i = index" [style.animation-delay.ms]="i * 100">
+              <div class="card-number">{{ '0' + (i + 1) }}</div>
+              <div class="card-content">
+                <div class="card-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path [attr.d]="info.icon"/>
+                  </svg>
+                </div>
+                <h3 class="card-title">{{ info.title }}</h3>
+                <p class="card-detail" *ngFor="let detail of info.details">{{ detail }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="social-section">
+            <h3 class="social-title">Follow Our Journey</h3>
+            <div class="social-links">
+              <a href="#" class="social-link" *ngFor="let social of socialLinks">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path [attr.d]="social.icon"/>
+                </svg>
+                <span>{{ social.name }}</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Response Time Promise -->
+          <div class="promise-card">
+            <div class="promise-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <div class="promise-content">
+              <h4>Quick Response Guarantee</h4>
+              <p>We aim to respond to all inquiries within <strong>24 hours</strong> during business days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-eyebrow">Common Questions</span>
+        <h2 class="section-title">Frequently Asked</h2>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item" *ngFor="let faq of faqs; let i = index" [class.expanded]="faq.expanded" (click)="toggleFaq(i)">
+          <div class="faq-question">
+            <span class="faq-number">{{ '0' + (i + 1) }}</span>
+            <h3>{{ faq.question }}</h3>
+            <div class="faq-toggle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </div>
+          </div>
+          <div class="faq-answer">
+            <p>{{ faq.answer }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-content">
+        <div class="newsletter-text">
+          <h2>Stay in the Loop</h2>
+          <p>Subscribe for brewing tips, new origin releases, and exclusive offers.</p>
+        </div>
+        <form class="newsletter-form" (ngSubmit)="subscribeNewsletter()">
+          <div class="newsletter-input-group">
+            <input type="email" placeholder="your@email.com" [(ngModel)]="newsletterEmail" name="newsletterEmail">
+            <button type="submit">Subscribe</button>
+          </div>
+          <p class="newsletter-note">No spam, ever. Unsubscribe anytime.</p>
+        </form>
+      </div>
+    </div>
+  </section>
 </div>
 
 <app-footer></app-footer>

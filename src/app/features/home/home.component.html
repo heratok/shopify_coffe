@@ -3,28 +3,58 @@
 <ng-container *ngIf="!loading; else loadingTpl">
   <!-- Hero Section -->
   <section class="hero">
-    <div class="hero-content">
-      <h1 class="hero-title">Experience Coffee Perfection</h1>
-      <p class="hero-subtitle">
-        From bean to cup, savor the world's finest coffee blends. 
-        Crafted for connoisseurs, delivered to your doorstep.
-      </p>
-      <div class="hero-buttons">
-        <a routerLink="/products" class="btn btn-accent btn-lg">Shop Now</a>
-        <a routerLink="/about" class="btn btn-secondary btn-lg">Learn More</a>
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-star">★</span>
+          <span class="badge-text">Premium Coffee Since 2015</span>
+        </div>
+        <h1 class="hero-title">
+          Experience the Art of <span>Coffee</span> Perfection
+        </h1>
+        <p class="hero-subtitle">
+          From the world's finest farms to your cup. Small-batch roasted, 
+          ethically sourced, and delivered fresh to your doorstep.
+        </p>
+        <div class="hero-buttons">
+          <a routerLink="/products" class="btn-hero-primary">
+            <span>Explore Collection</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a routerLink="/about" class="btn-hero-secondary">Our Story</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Varieties</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">15K+</div>
+            <div class="stat-label">Happy Customers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4.9</div>
+            <div class="stat-label">Rating</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
   
   <!-- Featured Products -->
-  <section class="section featured-products">
+  <section class="featured-section">
     <div class="container">
       <div class="section-header">
-        <h2>Featured Coffee Collections</h2>
-        <p>Discover our most loved coffee blends and single origins</p>
+        <div class="section-label">
+          <span>Curated Selection</span>
+        </div>
+        <h2 class="section-title">Featured Coffee Collections</h2>
+        <p class="section-subtitle">Discover our most loved single origins and signature blends, each with its own unique story</p>
       </div>
       
-      <div class="grid grid-3">
+      <div class="products-grid">
         <app-product-card 
           *ngFor="let product of featuredProducts" 
           [product]="product"
@@ -33,29 +63,43 @@
         </app-product-card>
       </div>
       
-      <div class="text-center mb-xl">
-        <a routerLink="/products" class="btn btn-primary">View All Products</a>
+      <div class="text-center">
+        <a routerLink="/products" class="view-all-btn">
+          <span>View All Products</span>
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
   
   <!-- Categories Section -->
-  <section class="section categories">
+  <section class="categories-section">
     <div class="container">
       <div class="section-header">
-        <h2>Shop by Category</h2>
-        <p>Find your perfect brew</p>
+        <div class="section-label">
+          <span>Browse By</span>
+        </div>
+        <h2 class="section-title">Shop by Category</h2>
+        <p class="section-subtitle">Find the perfect brew for your taste and brewing style</p>
       </div>
       
-      <div class="category-grid">
+      <div class="categories-grid">
         <div class="category-card" *ngFor="let category of categories">
           <div class="category-image">
-            <img [src]="category.imageUrl" [alt]="category.name">
+            <img [src]="category.imageUrl" [alt]="category.name" loading="lazy">
           </div>
+          <div class="category-overlay"></div>
           <div class="category-content">
-            <h3>{{ category.name }}</h3>
-            <p>{{ category.description }}</p>
-            <a [routerLink]="['/products/category', category.id]" class="btn btn-secondary">Browse</a>
+            <h3 class="category-title">{{ category.name }}</h3>
+            <p class="category-description">{{ category.description }}</p>
+            <a [routerLink]="['/products/category', category.id]" class="category-link">
+              <span>Browse Collection</span>
+              <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -63,51 +107,67 @@
   </section>
   
   <!-- About Section -->
-  <section class="section about">
+  <section class="about-section">
     <div class="container">
-      <div class="about-content">
+      <div class="about-grid">
         <div class="about-image">
           <img 
-            src="https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg" 
-            alt="Coffee roasting process"
-            width="600" 
-            height="400"
+            src="https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=1200" 
+            alt="Artisan coffee roasting process"
             loading="lazy"
           >
         </div>
-        <div class="about-text">
-          <h2>Our Coffee Story</h2>
+        <div class="about-content">
+          <div class="section-label">
+            <span>Our Story</span>
+          </div>
+          <h2 class="section-title">Crafted with Passion,<br>Delivered with Care</h2>
           <p>
             At Brew Haven, we believe great coffee is an art form. For over a decade, 
-            we've sourced the finest beans from sustainable farms around the world.
+            we've sourced the finest beans from sustainable farms across Ethiopia, Colombia, 
+            Kenya, and beyond.
           </p>
           <p>
-            Our expert roasters carefully craft each batch to bring out unique flavors 
-            and aromas that make every cup extraordinary.
+            Our master roasters carefully craft each batch in small quantities to bring out 
+            unique flavors and aromas that make every cup extraordinary. From light floral 
+            notes to bold chocolate undertones, we have the perfect coffee for every palate.
           </p>
-          <a routerLink="/about" class="btn btn-primary">Learn More About Us</a>
+          <a routerLink="/about" class="btn-hero-primary" style="margin-top: 2rem;">
+            <span>Discover Our Story</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
   </section>
   
   <!-- Testimonials -->
-  <section class="section testimonials">
+  <section class="testimonials-section">
     <div class="container">
       <div class="section-header">
-        <h2>What Our Customers Say</h2>
-        <p>Join thousands of satisfied coffee lovers</p>
+        <div class="section-label">
+          <span>Testimonials</span>
+        </div>
+        <h2 class="section-title">What Coffee Lovers Say</h2>
+        <p class="section-subtitle">Join thousands of satisfied customers who've made Brew Haven their daily ritual</p>
       </div>
       
-      <div class="testimonial-carousel">
-        <div class="testimonial-item" *ngFor="let testimonial of testimonials">
-          <div class="testimonial-rating">
-            <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= testimonial.rating">★</span>
+      <div class="testimonials-grid">
+        <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+          <div class="testimonial-stars">
+            <svg *ngFor="let star of [1,2,3,4,5]" class="star-icon" viewBox="0 0 24 24" fill="currentColor" [class.filled]="star <= testimonial.rating">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
           </div>
-          <p class="testimonial-text">{{ testimonial.text }}</p>
+          <p class="testimonial-text">"{{ testimonial.text }}"</p>
           <div class="testimonial-author">
-            <span class="author-name">{{ testimonial.author }}</span>
-            <span class="author-title">{{ testimonial.title }}</span>
+            <div class="author-avatar">{{ testimonial.author.charAt(0) }}</div>
+            <div class="author-info">
+              <h4>{{ testimonial.author }}</h4>
+              <span>{{ testimonial.title }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -115,20 +175,26 @@
   </section>
   
   <!-- Newsletter -->
-  <section class="section newsletter">
+  <section class="newsletter-section">
     <div class="container">
       <div class="newsletter-content">
-        <h2>Join Our Coffee Club</h2>
-        <p>
-          Subscribe to our newsletter and get 10% off your first order, 
-          plus exclusive access to new products and brewing tips.
+        <h2 class="newsletter-title">Join the Coffee Club</h2>
+        <p class="newsletter-subtitle">
+          Subscribe for 10% off your first order, plus exclusive access to new roasts 
+          and brewing tips from our experts.
         </p>
-        <form (submit)="$event.preventDefault(); subscribeNewsletter()">
-          <div class="newsletter-form">
-            <input type="email" placeholder="Your email address" required>
-            <button type="submit" class="btn btn-accent">Subscribe</button>
-          </div>
+        <form class="newsletter-form" (submit)="$event.preventDefault(); subscribeNewsletter()">
+          <input 
+            type="email" 
+            class="newsletter-input" 
+            placeholder="Enter your email address" 
+            required
+            aria-label="Email address">
+          <button type="submit" class="newsletter-btn">Subscribe Now</button>
         </form>
+        <p style="font-size: var(--text-sm); color: rgba(255,255,255,0.7); margin-top: var(--space-4);">
+          Join 5,000+ coffee enthusiasts. No spam, unsubscribe anytime.
+        </p>
       </div>
     </div>
   </section>

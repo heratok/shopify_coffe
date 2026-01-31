@@ -1,50 +1,192 @@
 <app-header></app-header>
 
 <div class="about-page">
-  <div class="container">
-    <section class="hero">
-      <h1>About Brew Haven</h1>
-      <p>We source and roast exceptional coffee beans with care, sharing our passion in every cup.</p>
-    </section>
-
-    <section class="mission grid">
-      <div>
-        <h2>Our Mission</h2>
-        <p>
-          To bring the world of specialty coffee closer to you through sustainable sourcing,
-          meticulous roasting, and a curated experience that celebrates origin and craft.
+  <!-- Hero Section - Organic Flow -->
+  <section class="about-hero">
+    <div class="hero-background">
+      <div class="hero-pattern"></div>
+      <div class="hero-gradient"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-eyebrow">Our Story</span>
+        <h1 class="hero-title">
+          <span class="title-line">Crafted with</span>
+          <span class="title-line accent">Passion & Purpose</span>
+        </h1>
+        <p class="hero-description">
+          From the misty mountains of Ethiopia to your morning cup, we bridge the gap between 
+          exceptional farmers and coffee lovers who demand more than just caffeine.
         </p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">12+</span>
+            <span class="stat-label">Partner Farms</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">8</span>
+            <span class="stat-label">Countries</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Direct Trade</span>
+          </div>
+        </div>
       </div>
-      <div>
-        <h2>Our Values</h2>
-        <ul class="values">
-          <li>Ethical, direct-trade relationships</li>
-          <li>Quality over quantity</li>
-          <li>Education and community</li>
-          <li>Environmental responsibility</li>
-        </ul>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-indicator">
+        <span>Discover More</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M19 12l-7 7-7-7"/>
+        </svg>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="highlights grid cards">
-      <div class="card">
-        <h3>Single Origin</h3>
-        <p>Distinct flavors from farms we know by name.</p>
+  <!-- Our Story Section - Asymmetric Layout -->
+  <section class="story-section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-visual">
+          <div class="visual-frame">
+            <div class="visual-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+            </div>
+            <div class="visual-accent"></div>
+          </div>
+        </div>
+        <div class="story-content">
+          <span class="section-eyebrow">Est. 2018</span>
+          <h2 class="section-title">A Journey from Bean to Cup</h2>
+          <div class="story-text">
+            <p>
+              Brew Haven began with a simple belief: that extraordinary coffee should be accessible 
+              to everyone, without compromising the livelihoods of those who grow it.
+            </p>
+            <p>
+              Our founder, after years of working directly with farming communities across Central 
+              and South America, witnessed firsthand the disparity between the price of a cup in 
+              cosmopolitan cafes and the wages earned by the hands that cultivated the beans.
+            </p>
+            <p>
+              Today, we maintain direct relationships with twelve family-owned farms, paying 
+              premiums that average 40% above fair trade minimums. Every bag tells a story—not 
+              just of flavor notes and roast profiles, but of sustainable livelihoods and 
+              environmental stewardship.
+            </p>
+          </div>
+          <blockquote class="story-quote">
+            <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <p>"Great coffee is not just about taste—it's about the hands that nurture it, 
+               the land that sustains it, and the communities that depend on it."</p>
+            <cite>— Brew Haven Founding Philosophy</cite>
+          </blockquote>
+        </div>
       </div>
-      <div class="card">
-        <h3>Expert Roasting</h3>
-        <p>Profiles dialed for sweetness, clarity, and balance.</p>
-      </div>
-      <div class="card">
-        <h3>Freshness First</h3>
-        <p>Small batches roasted weekly for peak flavor.</p>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="cta">
-      <a routerLink="/products" class="btn btn-primary">Explore Our Coffees</a>
-    </section>
-  </div>
+  <!-- Values Section - Card Grid with Icons -->
+  <section class="values-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">What Drives Us</span>
+        <h2 class="section-title">Our Core Values</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card" *ngFor="let value of values; let i = index" [style.animation-delay.ms]="i * 100">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path [attr.d]="value.icon"/>
+            </svg>
+          </div>
+          <h3 class="value-title">{{ value.title }}</h3>
+          <p class="value-description">{{ value.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section - Timeline -->
+  <section class="process-section">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-eyebrow">From Farm to You</span>
+        <h2 class="section-title">Our Process</h2>
+      </div>
+      <div class="process-timeline">
+        <div class="timeline-item" *ngFor="let step of processSteps; let i = index; let last = last">
+          <div class="timeline-marker">
+            <span class="marker-number">{{ i + 1 }}</span>
+            <div class="marker-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path [attr.d]="step.icon"/>
+              </svg>
+            </div>
+          </div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">{{ step.title }}</h3>
+            <p class="timeline-description">{{ step.description }}</p>
+          </div>
+          <div class="timeline-connector" *ngIf="!last"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-eyebrow">The People Behind</span>
+        <h2 class="section-title">Meet Our Team</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card" *ngFor="let member of team; let i = index" [style.animation-delay.ms]="i * 150">
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <span>{{ member.initials }}</span>
+            </div>
+            <div class="photo-frame"></div>
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">{{ member.name }}</h3>
+            <span class="member-role">{{ member.role }}</span>
+            <p class="member-bio">{{ member.bio }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-background">
+      <div class="cta-pattern"></div>
+    </div>
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Experience the Difference</h2>
+        <p class="cta-description">
+          Every cup tells a story. Start your journey with our curated selection 
+          of single-origin and small-batch coffees.
+        </p>
+        <a routerLink="/products" class="cta-button">
+          <span>Explore Our Coffees</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
 </div>
 
 <app-footer></app-footer>

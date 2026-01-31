@@ -1,24 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Brew Haven Coffee Shop</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Premium coffee shop with the finest beans and brewing methods" />
-    <base href="/">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Primary Meta Tags -->
+    <title>Brew Haven - Artisan Specialty Coffee | Premium Single Origin Beans</title>
+    <meta name="description" content="Discover exceptional single-origin coffees at Brew Haven. Ethically sourced, expertly roasted, delivered fresh. Experience the world's finest specialty coffee with free shipping over $50.">
+    <meta name="keywords" content="specialty coffee, single origin, artisan coffee, premium beans, coffee subscription, fresh roasted coffee, ethical sourcing">
+    <meta name="author" content="Brew Haven Coffee">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://brewhaven.com/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brewhaven.com/">
+    <meta property="og:title" content="Brew Haven - Artisan Specialty Coffee | Premium Single Origin Beans">
+    <meta property="og:description" content="Discover exceptional single-origin coffees. Ethically sourced, expertly roasted, delivered fresh. Free shipping over $50.">
+    <meta property="og:image" content="https://brewhaven.com/assets/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Brew Haven Coffee">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://brewhaven.com/">
+    <meta property="twitter:title" content="Brew Haven - Artisan Specialty Coffee">
+    <meta property="twitter:description" content="Discover exceptional single-origin coffees. Ethically sourced, expertly roasted, delivered fresh.">
+    <meta property="twitter:image" content="https://brewhaven.com/assets/og-image.jpg">
+    
+    <!-- Theme and Favicon -->
     <meta name="theme-color" content="#5D4037">
+    <meta name="msapplication-TileColor" content="#5D4037">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    
+    <!-- Preconnect to External Domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.paypal.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    
+    <!-- DNS Prefetch for Non-Critical Resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://www.paypal.com">
+    
+    <!-- Preload Critical Fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style">
+    
+    <!-- Preload Critical CSS -->
+    <link rel="preload" href="global_styles.css" as="style">
+    
+    <!-- Preload Critical JavaScript -->
+    <link rel="modulepreload" href="main.js">
+    
+    <!-- Base URL -->
+    <base href="/">
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Brew Haven Coffee",
+      "description": "Premium specialty coffee shop offering single-origin, artisan roasted coffee beans. Ethically sourced and freshly roasted.",
+      "url": "https://brewhaven.com",
+      "logo": "https://brewhaven.com/assets/logo.png",
+      "image": "https://brewhaven.com/assets/store-image.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Coffee Street",
+        "addressLocality": "Seattle",
+        "addressRegion": "WA",
+        "postalCode": "98101",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "47.6062",
+        "longitude": "-122.3321"
+      },
+      "telephone": "+1-555-123-4567",
+      "email": "hello@brewhaven.com",
+      "openingHours": "Mo-Fr 09:00-18:00 Sa 10:00-16:00",
+      "priceRange": "$$",
+      "paymentAccepted": ["Credit Card", "PayPal"],
+      "currenciesAccepted": "USD",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "127"
+      },
+      "sameAs": [
+        "https://www.instagram.com/brewhaven",
+        "https://www.facebook.com/brewhaven",
+        "https://twitter.com/brewhaven"
+      ]
+    }
+    </script>
+    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Brew Haven Coffee",
+      "url": "https://brewhaven.com",
+      "logo": "https://brewhaven.com/assets/logo.png",
+      "description": "Artisan specialty coffee roasters. Ethically sourced, expertly roasted.",
+      "foundingDate": "2018",
+      "sameAs": [
+        "https://www.instagram.com/brewhaven",
+        "https://www.facebook.com/brewhaven",
+        "https://twitter.com/brewhaven"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-555-123-4567",
+        "contactType": "customer service",
+        "availableLanguage": "English",
+        "areaServed": "US"
+      }
+    }
+    </script>
   </head>
   <body>
     <app-root>
+      <!-- Loading Screen -->
       <div class="app-loading">
         <div class="logo">
-          <div class="coffee-cup"></div>
+          <div class="coffee-cup">
+            <div class="steam">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
         </div>
-        <h2>Brew Haven Coffee Shop</h2>
+        <h2>Brew Haven</h2>
+        <p class="loading-text">Crafting your experience...</p>
         <div class="spinner"></div>
       </div>
     </app-root>
+    
+    <!-- No-JavaScript Warning -->
+    <noscript>
+      <div style="padding: 20px; text-align: center; background: #f5f3f0; font-family: system-ui, sans-serif;">
+        <h1 style="color: #5D4037; margin-bottom: 10px;">JavaScript Required</h1>
+        <p style="color: #78716c;">Please enable JavaScript to experience Brew Haven. We craft exceptional coffee experiences that require modern web technologies.</p>
+      </div>
+    </noscript>
   </body>
 </html>

@@ -1,34 +1,329 @@
 <app-header></app-header>
 
 <div class="checkout-page">
-  <div class="container">
-    <h1>Checkout</h1>
-    <div class="checkout-grid">
-      <!-- Left: Order Summary -->
-      <section class="order-summary card">
-        <h2>Order Summary</h2>
-        <div class="summary-row">
-          <span>Subtotal</span>
-          <span>{{ total | number:'1.2-2' }} USD</span>
-        </div>
-        <div class="summary-row">
-          <span>Shipping</span>
-          <span>{{ total > 50 ? 'FREE' : '5.00 USD' }}</span>
-        </div>
-        <div class="summary-row total">
-          <span>Total</span>
-          <span>{{ (total + (total > 50 ? 0 : 5)) | number:'1.2-2' }} USD</span>
-        </div>
-        <p class="secure">🔒 Secure payment powered by PayPal</p>
-      </section>
-
-      <!-- Right: Payment -->
-      <section class="payment card">
-        <h2>Payment</h2>
-        <p>Pay safely with PayPal using your balance or card.</p>
-        <div id="paypal-button-container"></div>
-      </section>
+  <!-- Checkout Hero -->
+  <div class="checkout-hero">
+    <div class="checkout-hero-content">
+      <h1 class="checkout-title">Secure Checkout</h1>
+      <p class="checkout-subtitle" *ngIf="currentStep < 4">Complete your artisan coffee order</p>
     </div>
+    <div class="hero-pattern"></div>
+  </div>
+
+  <!-- Progress Steps -->
+  <div class="progress-container" *ngIf="currentStep < 4">
+    <div class="container">
+      <div class="progress-steps">
+        <div class="step" [class.active]="currentStep >= 1" [class.current]="currentStep === 1" (click)="goToStep(1)">
+          <div class="step-indicator">
+            <span class="step-number" *ngIf="currentStep <= 1">1</span>
+            <svg *ngIf="currentStep > 1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <span class="step-label">Shipping</span>
+        </div>
+        <div class="step-connector" [class.active]="currentStep >= 2"></div>
+        <div class="step" [class.active]="currentStep >= 2" [class.current]="currentStep === 2" (click)="goToStep(2)">
+          <div class="step-indicator">
+            <span class="step-number" *ngIf="currentStep <= 2">2</span>
+            <svg *ngIf="currentStep > 2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <span class="step-label">Review</span>
+        </div>
+        <div class="step-connector" [class.active]="currentStep >= 3"></div>
+        <div class="step" [class.active]="currentStep >= 3" [class.current]="currentStep === 3">
+          <div class="step-indicator">
+            <span class="step-number">3</span>
+          </div>
+          <span class="step-label">Payment</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="!loading">
+    <!-- Empty Cart State -->
+    <div class="empty-checkout" *ngIf="cart.items.length === 0 && currentStep !== 4">
+      <div class="empty-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+      </div>
+      <h2>Your cart is empty</h2>
+      <p>Add some artisan coffee to proceed with checkout.</p>
+      <a routerLink="/products" class="btn-browse">Browse Collection</a>
+    </div>
+
+    <!-- Checkout Content -->
+    <div class="checkout-content" *ngIf="cart.items.length > 0 || currentStep === 4">
+      <div class="checkout-grid">
+        <!-- Main Content Area -->
+        <div class="main-content">
+          <!-- Step 1: Shipping Information -->
+          <div class="checkout-step" *ngIf="currentStep === 1" [@stepAnimation]>
+            <div class="step-header">
+              <h2>Shipping Information</h2>
+              <p>Enter your delivery details</p>
+            </div>
+
+            <form class="shipping-form" (ngSubmit)="nextStep()">
+              <div class="form-section">
+                <h3>Contact</h3>
+                <div class="form-group">
+                  <label for="email">Email Address *</label>
+                  <input type="email" id="email" [(ngModel)]="shippingData.email" name="email" required placeholder="your@email.com">
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3>Delivery Address</h3>
+                <div class="form-row">
+                  <div class="form-group half">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" id="firstName" [(ngModel)]="shippingData.firstName" name="firstName" required placeholder="John">
+                  </div>
+                  <div class="form-group half">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" id="lastName" [(ngModel)]="shippingData.lastName" name="lastName" required placeholder="Doe">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="address">Street Address *</label>
+                  <input type="text" id="address" [(ngModel)]="shippingData.address" name="address" required placeholder="123 Coffee Lane, Apt 4B">
+                </div>
+
+                <div class="form-row three-col">
+                  <div class="form-group">
+                    <label for="city">City *</label>
+                    <input type="text" id="city" [(ngModel)]="shippingData.city" name="city" required placeholder="Seattle">
+                  </div>
+                  <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" id="state" [(ngModel)]="shippingData.state" name="state" placeholder="WA">
+                  </div>
+                  <div class="form-group">
+                    <label for="zip">ZIP Code *</label>
+                    <input type="text" id="zip" [(ngModel)]="shippingData.zip" name="zip" required placeholder="98101">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" [(ngModel)]="shippingData.phone" name="phone" placeholder="(555) 123-4567">
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <a routerLink="/cart" class="btn-back">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                  </svg>
+                  Back to Cart
+                </a>
+                <button type="submit" class="btn-continue" [disabled]="!isStepValid()">
+                  Continue to Review
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Step 2: Review Order -->
+          <div class="checkout-step" *ngIf="currentStep === 2" [@stepAnimation]>
+            <div class="step-header">
+              <h2>Review Your Order</h2>
+              <p>Verify your items and shipping details</p>
+            </div>
+
+            <div class="review-section">
+              <h3>Items in Your Order</h3>
+              <div class="review-items">
+                <div class="review-item" *ngFor="let item of cart.items; let i = index" [style.animation-delay.ms]="i * 100">
+                  <div class="item-image-wrapper">
+                    <img [src]="item.product.imageUrl" [alt]="item.product.name">
+                  </div>
+                  <div class="item-info">
+                    <h4>{{ item.product.name }}</h4>
+                    <p class="item-variant">{{ item.product.origin }} • {{ item.product.roastLevel }}</p>
+                    <p class="item-qty">Qty: {{ item.quantity }}</p>
+                  </div>
+                  <div class="item-price">${{ item.product.price * item.quantity | number:'1.2-2' }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-section">
+              <h3>Shipping To</h3>
+              <div class="shipping-summary">
+                <p class="shipping-name">{{ shippingData.firstName }} {{ shippingData.lastName }}</p>
+                <p>{{ shippingData.address }}</p>
+                <p>{{ shippingData.city }}, {{ shippingData.state }} {{ shippingData.zip }}</p>
+                <p>{{ shippingData.email }}</p>
+                <p *ngIf="shippingData.phone">{{ shippingData.phone }}</p>
+              </div>
+              <button class="btn-edit" (click)="goToStep(1)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                Edit
+              </button>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-back" (click)="previousStep()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back
+              </button>
+              <button class="btn-continue" (click)="nextStep()">
+                Proceed to Payment
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Payment -->
+          <div class="checkout-step" *ngIf="currentStep === 3" [@stepAnimation]>
+            <div class="step-header">
+              <h2>Payment</h2>
+              <p>Secure payment via PayPal</p>
+            </div>
+
+            <div class="payment-section">
+              <div class="payment-methods">
+                <div class="payment-method active">
+                  <div class="method-icon paypal">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944 3.72a.77.77 0 01.757-.629h6.643c2.058 0 3.66.412 4.403 1.367a3.14 3.14 0 01.597 1.635c.02.654-.048 1.4-.206 2.24-.34 1.798-1.05 3.252-2.104 4.31-1.093 1.096-2.548 1.668-4.32 1.668h-.65a.77.77 0 00-.758.629l-.768 4.908a.641.641 0 01-.633.74H7.076z"/>
+                    </svg>
+                  </div>
+                  <span>PayPal</span>
+                </div>
+              </div>
+
+              <div class="payment-info">
+                <div class="secure-badge-large">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                  <div>
+                    <strong>Secure SSL Encrypted</strong>
+                    <span>Your payment information is protected</span>
+                  </div>
+                </div>
+              </div>
+
+              <div id="paypal-button-container"></div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-back" (click)="previousStep()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Review
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 4: Success -->
+          <div class="checkout-step success-step" *ngIf="currentStep === 4" [@stepAnimation]>
+            <div class="success-content">
+              <div class="success-icon">
+                <div class="success-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <path d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+              </div>
+              <h2>Order Confirmed!</h2>
+              <p class="success-message">Thank you for your purchase. Your artisan coffee is being prepared with care.</p>
+              <div class="order-details">
+                <p>Order Number: <strong>#ORD-{{ 10000 + (total * 100) | number:'1.0-0' }}</strong></p>
+                <p>A confirmation email has been sent to {{ shippingData.email || 'your email' }}</p>
+              </div>
+              <a routerLink="/products" class="btn-continue">
+                Continue Shopping
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar: Order Summary -->
+        <div class="sidebar" *ngIf="currentStep < 4">
+          <div class="order-summary-card">
+            <div class="summary-header">
+              <h3>Order Summary</h3>
+              <span class="item-badge">{{ itemCount }} item{{ itemCount > 1 ? 's' : '' }}</span>
+            </div>
+
+            <div class="summary-items" *ngIf="currentStep !== 2">
+              <div class="summary-item" *ngFor="let item of cart.items">
+                <div class="summary-item-image">
+                  <img [src]="item.product.imageUrl" [alt]="item.product.name">
+                  <span class="item-qty-badge">{{ item.quantity }}</span>
+                </div>
+                <div class="summary-item-details">
+                  <p class="summary-item-name">{{ item.product.name }}</p>
+                  <p class="summary-item-variant">{{ item.product.origin }}</p>
+                </div>
+                <span class="summary-item-price">${{ item.product.price * item.quantity | number:'1.2-2' }}</span>
+              </div>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>${{ total | number:'1.2-2' }}</span>
+            </div>
+
+            <div class="summary-row shipping">
+              <span>
+                Shipping
+                <small *ngIf="shippingCost > 0">(Free over $50)</small>
+              </span>
+              <span [class.free]="shippingCost === 0">{{ shippingCost === 0 ? 'FREE' : '$' + shippingCost + '.00' }}</span>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-row total">
+              <span>Total</span>
+              <span class="total-amount">${{ finalTotal | number:'1.2-2' }}</span>
+            </div>
+
+            <div class="summary-footer">
+              <div class="guarantee-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>30-Day Satisfaction Guarantee</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="loading-spinner"></div>
+    <p>Loading your cart...</p>
   </div>
 </div>
 

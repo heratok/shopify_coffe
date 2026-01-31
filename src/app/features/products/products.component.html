@@ -1,18 +1,36 @@
 <app-header></app-header>
-<main class="products-page">
-  <div class="products-hero">
-    <div class="container">
-      <h1>Our Coffee Collection</h1>
-      <p>Discover premium coffee beans from around the world</p>
 
+<main class="products-page">
+  <!-- Hero Section -->
+  <section class="products-hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span>Artisan Collection</span>
+      </div>
+      <h1>Our Coffee Collection</h1>
+      <p>Discover premium coffee beans from around the world, carefully selected and roasted to perfection</p>
+    </div>
+  </section>
+
+  <!-- Products Grid Section -->
+  <section class="products-section">
+    <div class="container">
+      <!-- Toolbar -->
+      <div class="products-toolbar">
+        <div class="results-count">
+          Showing <strong>{{ products.length }}</strong> products
+        </div>
+      </div>
+
+      <!-- Products Grid -->
       <div class="products-grid">
         <!-- Loading skeletons -->
         <ng-container *ngIf="loading">
-          <app-product-card-skeleton *ngFor="let i of [1,2,3,4,5,6]"></app-product-card-skeleton>
+          <app-product-card-skeleton *ngFor="let i of [1,2,3,4,5,6,7,8]"></app-product-card-skeleton>
         </ng-container>
 
         <!-- Actual products -->
-        <ng-container *ngIf="!loading">
+        <ng-container *ngIf="!loading && products.length > 0">
           <app-product-card
             *ngFor="let product of products"
             [product]="product"
@@ -20,7 +38,22 @@
           </app-product-card>
         </ng-container>
       </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="!loading && products.length === 0">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 6H20L19.5 14H6.5L6 6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+            <circle cx="17" cy="20" r="1.5" fill="currentColor"/>
+            <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>No products found</h3>
+        <p>Check back soon for new coffee arrivals</p>
+      </div>
     </div>
-  </div>
+  </section>
 </main>
+
 <app-footer></app-footer>

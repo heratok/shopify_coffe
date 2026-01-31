@@ -26,6 +26,7 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   cartTotal: number = 0;
   loading: boolean = true;
+  showPromo: boolean = false;
 
   constructor(private cartService: CartService) {}
 

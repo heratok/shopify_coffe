@@ -1,54 +1,78 @@
 <app-header></app-header>
 
-<div class="product-detail-page">
+<main class="product-detail-page">
   <ng-container *ngIf="!loading; else loadingTpl">
     <div class="container" *ngIf="product">
       <!-- Breadcrumbs -->
-      <div class="breadcrumbs">
-        <a routerLink="/">Home</a> /
-        <a routerLink="/products">Products</a> /
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a routerLink="/">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <a routerLink="/products">Products</a>
+        <span class="breadcrumb-separator">/</span>
         <span>{{ product.name }}</span>
-      </div>
+      </nav>
       
       <!-- Product Detail -->
       <div class="product-detail">
+        <!-- Product Images -->
         <div class="product-images">
           <div class="main-image">
-            <img [src]="product.imageUrl" [alt]="product.name">
+            <img [src]="product.imageUrl" [alt]="product.name" loading="eager">
           </div>
         </div>
         
+        <!-- Product Info -->
         <div class="product-info">
+          <!-- Badges -->
+          <div class="product-badge-row">
+            <span class="badge badge-category">{{ product.category | titlecase }}</span>
+            <span class="badge badge-origin">{{ product.origin }}</span>
+          </div>
+          
+          <!-- Title -->
           <h1 class="product-title">{{ product.name }}</h1>
           
-          <div class="product-meta">
-            <div class="product-origin">Origin: <span>{{ product.origin }}</span></div>
-            <div class="product-roast">Roast Level: <span>{{ product.roastLevel }}</span></div>
-          </div>
-          
-          <div class="product-rating">
-            <div class="stars">
-              <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= product.rating">★</span>
+          <!-- Meta -->
+          <div class="product-meta-row">
+            <div class="roast-indicator">
+              <span class="roast-dot" [style.background-color]="getRoastColor(product.roastLevel)"></span>
+              <span class="roast-text">{{ product.roastLevel }} Roast</span>
             </div>
-            <span class="rating-count">{{ product.reviewCount }} reviews</span>
+            <div class="product-rating">
+              <div class="stars">
+                <svg *ngFor="let star of [1,2,3,4,5]" class="star-icon" viewBox="0 0 24 24" fill="currentColor" [class.filled]="star <= product.rating">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              </div>
+              <span class="rating-text">{{ product.rating }} out of 5</span>
+              <span class="rating-count">({{ product.reviewCount }} reviews)</span>
+            </div>
           </div>
           
-          <div class="product-price">${{ product.price | number:'1.2-2' }}</div>
+          <!-- Price -->
+          <div class="product-price">
+            <span class="price-currency">$</span>
+            <span class="price-amount">{{ product.price | number:'1.2-2' }}</span>
+            <span class="price-unit">/ {{ product.weight }}g bag</span>
+          </div>
           
+          <!-- Description -->
           <div class="product-description">
             <p>{{ product.description }}</p>
           </div>
           
+          <!-- Flavor Notes -->
           <div class="flavor-notes">
-            <h3>Flavor Notes</h3>
+            <h4>Flavor Profile</h4>
             <div class="tags">
               <span class="tag" *ngFor="let note of product.flavourNotes">{{ note }}</span>
             </div>
           </div>
           
+          <!-- Actions -->
           <div class="product-actions">
-            <div class="quantity">
-              <span class="label">Quantity:</span>
+            <div class="quantity-wrapper">
+              <span class="quantity-label">Quantity:</span>
               <app-quantity-selector 
                 [quantity]="quantity" 
                 (quantityChange)="updateQuantity($event)">
@@ -56,17 +80,49 @@
             </div>
             
             <button 
-              class="btn btn-primary btn-lg"
+              class="add-to-cart-btn"
               (click)="addToCart()"
               [disabled]="!product.inStock">
-              {{ product.inStock ? 'Add to Cart' : 'Out of Stock' }}
+              <svg viewBox="0 0 24 24" fill="none" *ngIf="product.inStock">
+                <path d="M6 6H20L19.5 14H6.5L6 6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+                <circle cx="17" cy="20" r="1.5" fill="currentColor"/>
+                <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>{{ product.inStock ? 'Add to Cart' : 'Out of Stock' }}</span>
             </button>
           </div>
           
+          <!-- Shipping Info -->
           <div class="shipping-info">
-            <p>🚚 Free shipping on orders over $50</p>
-            <p>🔄 30-day money-back guarantee</p>
-            <p>☕ Freshly roasted to order</p>
+            <div class="shipping-item">
+              <div class="shipping-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M13 2L4 9H1V15H4L13 22V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M17 8C19 10 19 14 17 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M20 5C23 8 23 16 20 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="shipping-text">Free shipping over $50</span>
+            </div>
+            <div class="shipping-item">
+              <div class="shipping-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 6V12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="shipping-text">Freshly roasted daily</span>
+            </div>
+            <div class="shipping-item">
+              <div class="shipping-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="shipping-text">30-day guarantee</span>
+            </div>
           </div>
         </div>
       </div>
@@ -78,7 +134,7 @@
             class="tab-btn" 
             [class.active]="activeTab === 'details'"
             (click)="setActiveTab('details')">
-            Details
+            Product Details
           </button>
           <button 
             class="tab-btn" 
@@ -95,8 +151,9 @@
         </div>
         
         <div class="tab-content">
+          <!-- Details Tab -->
           <div *ngIf="activeTab === 'details'" class="tab-pane">
-            <h3>Product Details</h3>
+            <h3>Product Specifications</h3>
             <table class="details-table">
               <tr>
                 <td>Origin</td>
@@ -108,7 +165,7 @@
               </tr>
               <tr>
                 <td>Weight</td>
-                <td>{{ product.weight }}g</td>
+                <td>{{ product.weight }} grams</td>
               </tr>
               <tr>
                 <td>Flavor Notes</td>
@@ -116,36 +173,44 @@
               </tr>
               <tr>
                 <td>Category</td>
-                <td>{{ product.category }}</td>
+                <td>{{ product.category | titlecase }}</td>
+              </tr>
+              <tr>
+                <td>Availability</td>
+                <td>{{ product.inStock ? 'In Stock' : 'Out of Stock' }}</td>
               </tr>
             </table>
           </div>
           
+          <!-- Brewing Tab -->
           <div *ngIf="activeTab === 'brewing'" class="tab-pane">
-            <h3>Brewing Guide</h3>
+            <h3>Recommended Brewing Methods</h3>
             <div class="brewing-methods">
               <div class="brewing-method">
                 <h4>French Press</h4>
-                <p>Coarse grind. 1:15 coffee to water ratio. 4-minute steep time.</p>
+                <p>Use a coarse grind with a 1:15 coffee to water ratio. Steep for 4 minutes for a full-bodied cup.</p>
               </div>
               <div class="brewing-method">
                 <h4>Pour Over</h4>
-                <p>Medium grind. 1:17 coffee to water ratio. 3-minute brew time.</p>
+                <p>Medium grind works best with 1:17 ratio. Pour slowly in circular motions for 3 minutes.</p>
               </div>
               <div class="brewing-method">
                 <h4>Espresso</h4>
-                <p>Fine grind. 1:2 coffee to water ratio. 25-30 second extraction.</p>
+                <p>Fine grind with 1:2 ratio. Extract for 25-30 seconds for optimal crema and flavor.</p>
               </div>
             </div>
           </div>
           
+          <!-- Reviews Tab -->
           <div *ngIf="activeTab === 'reviews'" class="tab-pane">
             <h3>Customer Reviews</h3>
             <div class="reviews-summary">
               <div class="average-rating">
                 <div class="rating-number">{{ product.rating.toFixed(1) }}</div>
-                <div class="stars">
-                  <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= product.rating">★</span>
+                <div class="rating-stars">
+                  <svg *ngFor="let star of [1,2,3,4,5]" viewBox="0 0 24 24" fill="currentColor" [style.color]="star <= product.rating ? 'var(--color-accent)' : 'var(--color-gray-300)'">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  </svg>
                 </div>
                 <div class="rating-count">Based on {{ product.reviewCount }} reviews</div>
               </div>
@@ -154,27 +219,40 @@
             <div class="reviews-list">
               <div class="review">
                 <div class="review-header">
-                  <div class="reviewer">John D.</div>
+                  <div class="reviewer">
+                    <div class="reviewer-avatar">J</div>
+                    <span>John D.</span>
+                  </div>
                   <div class="review-date">2 months ago</div>
                 </div>
                 <div class="review-rating">
-                  <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= 5">★</span>
+                  <svg *ngFor="let star of [1,2,3,4,5]" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color: var(--color-accent);">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  </svg>
                 </div>
                 <div class="review-content">
-                  <p>This coffee is amazing! Rich flavor with notes of chocolate and berries as described. Will definitely purchase again.</p>
+                  <p>This coffee is absolutely amazing! The flavor notes are perfectly balanced - I can definitely taste the chocolate and berry undertones. Will be ordering again!</p>
                 </div>
               </div>
               
               <div class="review">
                 <div class="review-header">
-                  <div class="reviewer">Sarah M.</div>
+                  <div class="reviewer">
+                    <div class="reviewer-avatar">S</div>
+                    <span>Sarah M.</span>
+                  </div>
                   <div class="review-date">1 month ago</div>
                 </div>
                 <div class="review-rating">
-                  <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= 4">★</span>
+                  <svg *ngFor="let star of [1,2,3,4]" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color: var(--color-accent);">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color: var(--color-gray-300);">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  </svg>
                 </div>
                 <div class="review-content">
-                  <p>Great coffee with a smooth finish. Works well as both espresso and pour over. The aroma is wonderful!</p>
+                  <p>Great coffee with a smooth finish. Works beautifully as both espresso and pour over. The aroma when you open the bag is incredible!</p>
                 </div>
               </div>
             </div>
@@ -187,6 +265,6 @@
   <ng-template #loadingTpl>
     <app-product-detail-skeleton></app-product-detail-skeleton>
   </ng-template>
-</div>
+</main>
 
 <app-footer></app-footer>

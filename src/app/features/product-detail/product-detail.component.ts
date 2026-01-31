@@ -66,4 +66,15 @@ export class ProductDetailComponent implements OnInit {
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
+
+  getRoastColor(roastLevel: string): string {
+    const colors: { [key: string]: string } = {
+      'Light': '#d4a574',
+      'Medium-Light': '#c4956a',
+      'Medium': '#a67c52',
+      'Medium-Dark': '#8b6914',
+      'Dark': '#5d4037'
+    };
+    return colors[roastLevel] || '#a67c52';
+  }
 }
