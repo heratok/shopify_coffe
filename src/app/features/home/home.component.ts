@@ -83,20 +83,20 @@ export class HomeComponent implements OnInit {
     {
       rating: 5,
       text: 'The Kenyan single origin coffee from Brew Haven is extraordinary. The fruity notes are perfectly balanced with a delightful acidity.',
-      author: 'Emma Johnson',
-      title: 'Coffee Enthusiast'
+      author: 'Tasting note',
+      title: 'Kenya AA — blackcurrant, wine, citrus'
     },
     {
       rating: 5,
       text: 'I\'ve tried many subscription services, but Brew Haven consistently delivers the freshest and most flavorful coffee I\'ve ever had.',
-      author: 'Michael Chang',
-      title: 'Home Barista'
+      author: 'Cupping note',
+      title: 'Morning Blend — chocolate, nuts, caramel'
     },
     {
       rating: 4,
       text: 'Their Colombian blend has become my morning ritual. Rich, smooth, and always delivered right when I need it.',
-      author: 'Sarah Williams',
-      title: 'Loyal Customer'
+      author: 'Roaster note',
+      title: 'Colombian Supremo — caramel, almond, red apple'
     }
   ];
 

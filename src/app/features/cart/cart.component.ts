@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { CartItem } from '../../core/models/cart-item.model';
@@ -13,6 +14,7 @@ import { CartSkeletonComponent } from '../../shared/components/cart-skeleton/car
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     RouterLink,
     QuantitySelectorComponent,
     HeaderComponent,
@@ -27,6 +29,18 @@ export class CartComponent implements OnInit {
   cartTotal: number = 0;
   loading: boolean = true;
   showPromo: boolean = false;
+  confirmClear: boolean = false;
+  promoCode: string = '';
+  promoApplied: string = '';
+  promoDiscount: number = 0;
+  promoError: string = '';
+  promoMessage: string = '';
+  Math = Math;
+
+  private readonly validPromoCodes: { [code: string]: number } = {
+    'SAVE10': 0.10,
+    'BREW15': 0.15
+  };
 
   constructor(private cartService: CartService) {}
 
@@ -39,7 +53,47 @@ export class CartComponent implements OnInit {
     });
   }
 
-  
+  get discountAmount(): number {
+    return this.cartTotal * this.promoDiscount;
+  }
+
+  get promoTotal(): number {
+    const subtotal = this.cartTotal - this.discountAmount;
+    return subtotal + (subtotal > 50 ? 0 : 5);
+  }
+
+  applyPromo(): void {
+    const code = this.promoCode.trim().toUpperCase();
+    if (!code) {
+      this.promoError = 'Enter a promo code.';
+      this.promoMessage = '';
+      return;
+    }
+    const rate = this.validPromoCodes[code];
+    if (rate === undefined) {
+      this.promoError = `"${code}" is not a valid code.`;
+      this.promoMessage = '';
+      return;
+    }
+    if (this.promoApplied === code) {
+      this.promoError = '';
+      this.promoMessage = `${code} is already applied.`;
+      return;
+    }
+    this.promoApplied = code;
+    this.promoDiscount = rate;
+    this.promoError = '';
+    this.promoMessage = `${code} applied — ${Math.round(rate * 100)}% off.`;
+    this.showPromo = false;
+  }
+
+  removePromo(): void {
+    this.promoApplied = '';
+    this.promoDiscount = 0;
+    this.promoMessage = '';
+    this.promoError = '';
+  }
+
   updateQuantity(productId: string, quantity: number): void {
     this.cartService.updateQuantity(productId, quantity);
   }
@@ -47,10 +101,20 @@ export class CartComponent implements OnInit {
   removeItem(productId: string): void {
     this.cartService.removeFromCart(productId);
   }
-  
+
   clearCart(): void {
-    if (confirm('Are you sure you want to clear your cart?')) {
+    if (this.confirmClear) {
       this.cartService.clearCart();
+      this.confirmClear = false;
+      this.promoApplied = '';
+      this.promoDiscount = 0;
+      this.promoMessage = '';
+    } else {
+      this.confirmClear = true;
     }
+  }
+
+  cancelClear(): void {
+    this.confirmClear = false;
   }
 }

@@ -228,6 +228,37 @@
   box-shadow: var(--shadow-lg);
 }
 
+.empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-reset-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-6);
+  color: var(--color-accent-dark);
+  font-family: var(--font-family-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid var(--color-accent-dark);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-base);
+}
+
+.btn-reset-link:hover {
+  background: var(--color-accent-dark);
+  color: var(--color-cream);
+}
+
 /* Pagination */
 .pagination {
   display: flex;

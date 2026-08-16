@@ -36,11 +36,6 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
-  loginWithGoogle() {
-    // TODO: Implement Google OAuth
-    console.log('Google login clicked');
-  }
-
   onSubmit() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();

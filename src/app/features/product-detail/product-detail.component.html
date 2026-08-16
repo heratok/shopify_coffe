@@ -40,15 +40,20 @@
             </div>
             <div class="product-rating">
               <div class="stars">
-                <svg
-                  *ngFor="let star of getStars(); let i = index"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="star-icon"
-                  [class.filled]="i < Math.floor(product.rating)"
-                  [class.half]="i === Math.floor(product.rating) && product.rating % 1 !== 0">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                </svg>
+                <ng-container *ngFor="let star of getStars(); let i = index">
+                  <span
+                    class="star-wrap"
+                    [class.half]="i === Math.floor(product.rating) && product.rating % 1 !== 0">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="star-icon star-base" aria-hidden="true">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    <span class="star-fill" [class.show]="i < Math.floor(product.rating) || (i === Math.floor(product.rating) && product.rating % 1 !== 0)">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="star-icon" aria-hidden="true">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                      </svg>
+                    </span>
+                  </span>
+                </ng-container>
               </div>
               <span class="rating-text">{{ product.rating }} out of 5</span>
               <span class="rating-count">({{ product.reviewCount }} reviews)</span>
@@ -214,17 +219,22 @@
               <div class="average-rating">
                 <div class="rating-number">{{ product.rating.toFixed(1) }}</div>
                 <div class="rating-stars">
-                  <svg
-                    *ngFor="let star of getStars(); let i = index"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="star-icon"
-                    [class.filled]="i < Math.floor(product.rating)"
-                    [class.half]="i === Math.floor(product.rating) && product.rating % 1 !== 0">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                  </svg>
+                  <ng-container *ngFor="let star of getStars(); let i = index">
+                    <span
+                      class="star-wrap"
+                      [class.half]="i === Math.floor(product.rating) && product.rating % 1 !== 0">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="star-icon star-base" aria-hidden="true">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                      </svg>
+                      <span class="star-fill" [class.show]="i < Math.floor(product.rating) || (i === Math.floor(product.rating) && product.rating % 1 !== 0)">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="star-icon" aria-hidden="true">
+                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                      </span>
+                    </span>
+                  </ng-container>
                 </div>
-                <div class="rating-count">Based on {{ product.reviewCount }} reviews</div>
+                <div class="rating-count">Sample reviews</div>
               </div>
             </div>
             

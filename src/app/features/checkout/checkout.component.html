@@ -247,9 +247,12 @@
                 </div>
               </div>
               <h2>Order Confirmed!</h2>
-              <p class="success-message">Thank you for your purchase. Your artisan coffee is being prepared with care.</p>
+              <p class="success-message" *ngIf="successMessage; else defaultMessage">{{ successMessage }}</p>
+              <ng-template #defaultMessage>
+                <p class="success-message">Thank you for your purchase. Your artisan coffee is being prepared with care.</p>
+              </ng-template>
               <div class="order-details">
-                <p>Order Number: <strong>#ORD-{{ 10000 + (total * 100) | number:'1.0-0' }}</strong></p>
+                <p>Order Number: <strong>#{{ orderNumber || (10000 + (total * 100) | number:'1.0-0') }}</strong></p>
                 <p>A confirmation email has been sent to {{ shippingData.email || 'your email' }}</p>
               </div>
               <a routerLink="/products" class="btn-continue">

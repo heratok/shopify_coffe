@@ -69,8 +69,9 @@
 
       <div class="products-grid">
         <app-product-card
-          *ngFor="let product of featuredProducts"
+          *ngFor="let product of featuredProducts; let i = index"
           [product]="product"
+          [priority]="i === 0"
           (addToCart)="addToCart($event)"
           (quickView)="viewProduct($event)">
         </app-product-card>
@@ -162,7 +163,7 @@
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">What Coffee Lovers Say</h2>
-        <p class="section-subtitle">Join thousands of satisfied customers who've made Brew Haven their daily ritual</p>
+        <p class="section-subtitle">Notes from the cupping table, straight from our catalog</p>
       </div>
 
       <div class="testimonials-grid">

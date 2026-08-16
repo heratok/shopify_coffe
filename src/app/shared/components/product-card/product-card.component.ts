@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, Input, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
+import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../../core/models/product.model';
 import { ImageService } from '../../../core/services/image.service';
@@ -29,7 +29,8 @@ import { ImageService } from '../../../core/services/image.service';
             <img
               [src]="imageUrl"
               [alt]="product.name"
-              loading="lazy"
+              [attr.loading]="priority ? 'eager' : 'lazy'"
+              [attr.fetchpriority]="priority ? 'high' : undefined"
               (load)="imageLoaded = true"
               [class.loaded]="imageLoaded">
             <div class="image-placeholder" *ngIf="!imageLoaded">
@@ -104,14 +105,20 @@ import { ImageService } from '../../../core/services/image.service';
         <!-- Rating -->
         <div class="product-rating" *ngIf="product.rating">
           <div class="stars">
-            <svg
-              *ngFor="let star of getStars(); let i = index"
-              viewBox="0 0 24 24"
-              class="star-icon"
-              [class.filled]="i < Math.floor(product.rating)"
-              [class.half]="i === Math.floor(product.rating) && product.rating % 1 !== 0">
-              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
-            </svg>
+            <ng-container *ngFor="let star of getStars(); let i = index">
+              <span
+                class="star-wrap"
+                [class.half]="i === Math.floor(product.rating) && product.rating % 1 !== 0">
+                <svg viewBox="0 0 24 24" class="star-icon star-base" aria-hidden="true">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+                <span class="star-fill" [class.show]="i < Math.floor(product.rating) || (i === Math.floor(product.rating) && product.rating % 1 !== 0)">
+                  <svg viewBox="0 0 24 24" class="star-icon" aria-hidden="true">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+                  </svg>
+                </span>
+              </span>
+            </ng-container>
           </div>
           <span class="rating-text">{{ product.rating }} ({{ product.reviewCount }})</span>
         </div>
@@ -123,14 +130,62 @@ import { ImageService } from '../../../core/services/image.service';
             <span class="amount">{{ product.price | number:'1.2-2' }}</span>
           </div>
           <div class="roast-level">
-            <svg class="wheel-arc" viewBox="0 0 20 20" [attr.aria-label]="'Wheel slice: ' + getWheelFamily()">
-              <path [attr.stroke]="getWheelArcColor()" d="M10 2 A8 8 0 0 1 16.93 14"/>
-            </svg>
+            <div class="wheel-dots" [attr.aria-label]="'Flavor families: ' + getWheelFamilies().join(', ')">
+              <span
+                class="wheel-dot"
+                *ngFor="let family of getWheelFamilies()"
+                [style.background]="'var(--wheel-' + family + ')'"
+                [attr.title]="family"></span>
+            </div>
             <span class="roast-text">{{ product.roastLevel }}</span>
           </div>
         </div>
       </div>
     </article>
+
+    <!-- Quick View Modal -->
+    <div class="quickview-overlay" *ngIf="quickViewOpen" (click)="closeQuickView()" role="presentation"></div>
+    <div class="quickview-modal" *ngIf="quickViewOpen" role="dialog" aria-modal="true" [attr.aria-label]="'Quick view: ' + product.name">
+      <button class="quickview-close" (click)="closeQuickView()" aria-label="Close quick view">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="quickview-image">
+        <img [src]="imageUrl" [alt]="product.name" loading="lazy">
+      </div>
+      <div class="quickview-body">
+        <div class="product-category">
+          <span class="category-badge">{{ product.category | titlecase }}</span>
+          <span class="origin-dot"></span>
+          <span class="origin-text">{{ product.origin }}</span>
+        </div>
+        <h3 class="quickview-title">{{ product.name }}</h3>
+        <div class="flavour-notes" *ngIf="product.flavourNotes?.length">
+          <span class="note-tag" *ngFor="let note of product.flavourNotes.slice(0, 4)">{{ note }}</span>
+        </div>
+        <p class="quickview-desc">{{ product.description }}</p>
+        <div class="quickview-meta">
+          <span class="roast-meta">{{ product.roastLevel }} roast</span>
+          <span class="weight-meta">{{ product.weight }}g</span>
+          <span class="stock-meta" [class.out]="!product.inStock">{{ product.inStock ? 'In stock' : 'Out of stock' }}</span>
+        </div>
+        <div class="quickview-footer">
+          <div class="product-price">
+            <span class="currency">$</span>
+            <span class="amount">{{ product.price | number:'1.2-2' }}</span>
+          </div>
+          <button class="btn-action btn-add-cart" (click)="onAddToCart(); closeQuickView()" aria-label="Add to cart">
+            <svg viewBox="0 0 24 24" fill="none" class="action-icon">
+              <path d="M6 6H20L19.5 14H6.5L6 6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+              <circle cx="17" cy="20" r="1.5" fill="currentColor"/>
+              <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Add to Cart</span>
+          </button>
+        </div>
+        <a class="quickview-detail-link" [routerLink]="['/products', product.id]" (click)="closeQuickView()">View full details</a>
+      </div>
+    </div>
   `,
   styles: [`
     :host {
@@ -473,26 +528,37 @@ import { ImageService } from '../../../core/services/image.service';
       gap: 2px;
     }
 
+    .star-wrap {
+      position: relative;
+      display: inline-flex;
+      width: 14px;
+      height: 14px;
+    }
+
     .star-icon {
       width: 14px;
       height: 14px;
       color: var(--color-cream-line);
-      position: relative;
-    }
-
-    .star-icon.filled {
-      color: var(--color-accent);
-    }
-
-    .star-icon.half {
-      color: var(--color-accent);
-    }
-
-    .star-icon.half::after {
-      content: '';
       position: absolute;
-      inset: 0 0 0 50%;
-      background: var(--color-white);
+      inset: 0;
+    }
+
+    .star-wrap .star-fill {
+      position: absolute;
+      inset: 0;
+      width: 50%;
+      overflow: hidden;
+      color: var(--color-accent);
+      opacity: 0;
+    }
+
+    .star-wrap.half .star-fill,
+    .star-wrap .star-fill.show {
+      opacity: 1;
+    }
+
+    .star-wrap:not(.half) .star-fill.show {
+      width: 100%;
     }
 
     .rating-text {
@@ -539,15 +605,18 @@ import { ImageService } from '../../../core/services/image.service';
     }
 
     /* Wheel slice - the coffee's identity arc */
-    .wheel-arc {
-      width: 16px;
-      height: 16px;
+    .wheel-dots {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .wheel-arc path {
-      fill: none;
-      stroke-width: 4;
-      stroke-linecap: round;
+    .wheel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(250, 246, 239, 0.9);
+      box-shadow: 0 1px 2px rgba(20, 14, 8, 0.25);
     }
 
     .roast-text {
@@ -567,22 +636,179 @@ import { ImageService } from '../../../core/services/image.service';
         transform: scale(1);
       }
     }
+
+    /* Quick view modal */
+    .quickview-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 14, 8, 0.6);
+      backdrop-filter: blur(3px);
+      z-index: 900;
+      animation: fadeIn 200ms ease-out;
+    }
+
+    .quickview-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(720px, calc(100vw - 32px));
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      background: var(--color-cream);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-2xl);
+      z-index: 901;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      animation: scaleIn 200ms ease-out;
+    }
+
+    .quickview-close {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-cream-deep);
+      border: none;
+      border-radius: var(--radius-full);
+      color: var(--color-espresso);
+      cursor: pointer;
+      z-index: 2;
+      transition: background var(--transition-fast);
+    }
+
+    .quickview-close:hover {
+      background: var(--color-cream-line);
+    }
+
+    .quickview-image {
+      background: var(--color-cream-deep);
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .quickview-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .quickview-body {
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .quickview-title {
+      font-family: var(--font-family-display);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--color-espresso);
+      margin: 0;
+    }
+
+    .quickview-desc {
+      color: var(--color-espresso-soft);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .quickview-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      font-family: var(--font-family-mono);
+      font-size: var(--text-xs);
+      color: var(--color-espresso-muted);
+    }
+
+    .stock-meta {
+      color: var(--color-success);
+    }
+
+    .stock-meta.out {
+      color: var(--color-error);
+    }
+
+    .quickview-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-cream-line);
+    }
+
+    .quickview-detail-link {
+      text-align: center;
+      color: var(--color-accent-dark);
+      font-weight: 600;
+      font-size: var(--text-sm);
+    }
+
+    .quickview-detail-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 639px) {
+      .quickview-modal {
+        grid-template-columns: 1fr;
+        max-height: calc(100vh - 24px);
+        width: calc(100vw - 24px);
+      }
+
+      .quickview-image {
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        max-height: 220px;
+      }
+
+      .quickview-body {
+        padding: var(--space-6);
+      }
+    }
   `]
 })
 export class ProductCardComponent implements OnInit {
   @Input() product!: Product;
+  @Input() priority = false;
   @Output() addToCart = new EventEmitter<Product>();
   @Output() quickView = new EventEmitter<Product>();
 
   imageUrl: string = '';
   imageLoaded = false;
   isWishlisted = false;
+  quickViewOpen = false;
   Math = Math;
 
-  constructor(private imageService: ImageService) {}
+  constructor(
+    private imageService: ImageService,
+    private router: Router
+  ) {}
+
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(): void {
+    this.closeQuickView();
+  }
 
   ngOnInit() {
     this.imageUrl = this.imageService.getProductImage(this.product.id, this.product.name);
+  }
+
+  openQuickView(): void {
+    this.quickViewOpen = true;
+  }
+
+  closeQuickView(): void {
+    this.quickViewOpen = false;
   }
 
   getStars(): number[] {
@@ -620,6 +846,39 @@ export class ProductCardComponent implements OnInit {
     return 'nutty';
   }
 
+  getWheelFamilies(): string[] {
+    const families: string[] = [];
+    const seen: { [key: string]: boolean } = {};
+    for (const note of this.product.flavourNotes || []) {
+      const family = this.getFamilyFromNote(note);
+      if (!seen[family]) {
+        seen[family] = true;
+        families.push(family);
+      }
+    }
+    if (!families.length) return ['nutty'];
+    return families;
+  }
+
+  getFamilyFromNote(note: string): string {
+    const n = note.toLowerCase();
+    const rules: Array<[RegExp, string]> = [
+      [/floral|bergamot|jasmine|rose|lavender|citrus/, 'floral'],
+      [/blackcurrant|wine|berry|apple|cherry|fruit|stone/, 'fruity'],
+      [/sour|vinegary|tart/, 'sour'],
+      [/earthy|herbal|hay|grassy|green/, 'green'],
+      [/roast|smoky|ashy|pipe|tobacco/, 'roasty'],
+      [/spice|pepper|pimento|pungent/, 'spicy'],
+      [/nut|almond|hazelnut|walnut|peanut|caramel/, 'nutty'],
+      [/chocolate|cocoa|mocha/, 'cocoa'],
+      [/sweet|sugar|honey|syrup|vanilla/, 'sweet']
+    ];
+    for (const [re, family] of rules) {
+      if (re.test(n)) return family;
+    }
+    return 'nutty';
+  }
+
   getWheelArcColor(): string {
     return 'var(--wheel-' + this.getWheelFamily() + ')';
   }
@@ -630,6 +889,7 @@ export class ProductCardComponent implements OnInit {
 
   onQuickView(): void {
     this.quickView.emit(this.product);
+    this.openQuickView();
   }
 
   toggleWishlist(): void {

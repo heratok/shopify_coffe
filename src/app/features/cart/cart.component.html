@@ -71,8 +71,9 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                 </svg>
-                Clear Cart
+                {{ confirmClear ? 'Confirm clear?' : 'Clear Cart' }}
               </button>
+              <button class="btn-clear-cancel" *ngIf="confirmClear" (click)="cancelClear()">Cancel</button>
             </div>
           </div>
           
@@ -88,14 +89,19 @@
                   <span class="row-label">Subtotal</span>
                   <span class="row-value">${{ cartTotal | number:'1.2-2' }}</span>
                 </div>
+
+                <div class="summary-row discount-row" *ngIf="discountAmount > 0">
+                  <span class="row-label">Discount ({{ promoApplied }})</span>
+                  <span class="row-value discount-value">-${{ discountAmount | number:'1.2-2' }}</span>
+                </div>
                 
                 <div class="summary-row shipping-row">
                   <span class="row-label">
                     Shipping
-                    <span class="shipping-note" *ngIf="cartTotal <= 50">(Free over $50)</span>
+                    <span class="shipping-note" *ngIf="promoTotal <= 50">(Free over $50)</span>
                   </span>
-                  <span class="row-value" [class.free-shipping]="cartTotal > 50">
-                    {{ cartTotal > 50 ? 'FREE' : '$5.00' }}
+                  <span class="row-value" [class.free-shipping]="promoTotal > 50">
+                    {{ promoTotal > 50 ? 'FREE' : '$5.00' }}
                   </span>
                 </div>
                 
@@ -103,7 +109,7 @@
                 
                 <div class="summary-row total-row">
                   <span class="row-label">Total</span>
-                  <span class="row-value total-value">${{ (cartTotal + (cartTotal > 50 ? 0 : 5)) | number:'1.2-2' }}</span>
+                  <span class="row-value total-value">${{ promoTotal | number:'1.2-2' }}</span>
                 </div>
               </div>
               
@@ -116,9 +122,16 @@
                 </div>
                 <div class="promo-form" [class.expanded]="showPromo">
                   <div class="promo-input-group">
-                    <input type="text" placeholder="Enter code" class="promo-input">
-                    <button class="btn-promo">Apply</button>
+                    <input type="text" placeholder="Enter code" class="promo-input" [(ngModel)]="promoCode" (keyup.enter)="applyPromo()" aria-label="Promo code">
+                    <button class="btn-promo" (click)="applyPromo()">Apply</button>
                   </div>
+                  <p class="promo-message success" *ngIf="promoMessage">{{ promoMessage }}</p>
+                  <p class="promo-message error" *ngIf="promoError">{{ promoError }}</p>
+                  <p class="promo-hint">Try SAVE10 or BREW15.</p>
+                </div>
+                <div class="promo-applied" *ngIf="promoApplied && !showPromo">
+                  <span>{{ promoApplied }} applied — {{ Math.round(promoDiscount * 100) }}% off</span>
+                  <button class="promo-remove" (click)="removePromo()">Remove</button>
                 </div>
               </div>
               

@@ -958,7 +958,6 @@
 @media (max-width: 1023px) {
   .sidebar {
     position: static;
-    order: -1;
   }
 
   .checkout-grid {

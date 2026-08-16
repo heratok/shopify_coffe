@@ -34,18 +34,19 @@ export class AuthService {
 
   login(email: string, password: string): Observable<{ user: User; token: string }> {
     // Simulación de login con token JWT
+    const name = this.nameFromEmail(email);
     const mockToken = this.generateMockToken({
       sub: '1',
       email: email,
-      firstName: 'Usuario',
-      lastName: 'Temporal'
+      firstName: name.firstName,
+      lastName: name.lastName
     });
 
     const mockUser: User = {
       id: '1',
       email: email,
-      firstName: 'Usuario',
-      lastName: 'Temporal',
+      firstName: name.firstName,
+      lastName: name.lastName,
       isAuthenticated: true
     };
 
@@ -106,6 +107,16 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  private nameFromEmail(email: string): { firstName: string; lastName: string } {
+    const local = (email || '').split('@')[0] || 'coffee';
+    const parts = local.split(/[._-]+/).filter(Boolean);
+    const firstName = parts[0] ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) : 'Coffee';
+    const lastName = parts.length > 1
+      ? parts[1].charAt(0).toUpperCase() + parts[1].slice(1)
+      : 'Fan';
+    return { firstName, lastName };
   }
 
   private generateMockToken(payload: any): string {

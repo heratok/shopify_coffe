@@ -46,8 +46,9 @@
         <!-- Actual products -->
         <ng-container *ngIf="!loading && visibleProducts.length > 0">
           <app-product-card
-            *ngFor="let product of visibleProducts"
+            *ngFor="let product of visibleProducts; let i = index"
             [product]="product"
+            [priority]="i === 0"
             (addToCart)="addToCart($event)">
           </app-product-card>
         </ng-container>
@@ -63,9 +64,17 @@
             <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3>No products found</h3>
-        <p>Check back soon for new coffee arrivals</p>
-        <button class="btn-reset" *ngIf="wheel" (click)="clearWheelFilter()">Clear flavor filter</button>
+        <h3 *ngIf="searchTerm">No matches for "{{ searchTerm }}"</h3>
+        <h3 *ngIf="wheel && !searchTerm">No coffees with this flavor yet</h3>
+        <h3 *ngIf="!wheel && !searchTerm">No products found</h3>
+        <p *ngIf="searchTerm">Try a different term, like "ethiopian" or "dark chocolate".</p>
+        <p *ngIf="wheel && !searchTerm">Try another flavor family from the wheel.</p>
+        <p *ngIf="!wheel && !searchTerm">Check back soon for new coffee arrivals.</p>
+        <div class="empty-actions">
+          <button class="btn-reset" *ngIf="wheel" (click)="clearWheelFilter()">Clear flavor filter</button>
+          <button class="btn-reset" *ngIf="searchTerm" (click)="clearSearch()">Clear search</button>
+          <a class="btn-reset-link" routerLink="/products">Browse all coffees</a>
+        </div>
       </div>
     </div>
   </section>

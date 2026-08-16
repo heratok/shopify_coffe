@@ -34,6 +34,7 @@ export class ContactComponent {
   isSubmitting = false;
   showSuccess = false;
   newsletterEmail = '';
+  newsletterSuccess = false;
 
   contactInfo: ContactInfo[] = [
     {
@@ -48,7 +49,7 @@ export class ContactComponent {
     },
     {
       title: 'Contact Details',
-      details: ['+1 (555) 123-4567', 'hello@brewhaven.com', 'support@brewhaven.com'],
+      details: ['+1 (555) 123-4567', 'hello@brewhaven.com'],
       icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
     }
   ];
@@ -137,7 +138,7 @@ export class ContactComponent {
 
   subscribeNewsletter() {
     if (this.newsletterEmail) {
-      alert(`Thank you for subscribing with ${this.newsletterEmail}! You'll receive our next newsletter soon.`);
+      this.newsletterSuccess = true;
       this.newsletterEmail = '';
     }
   }

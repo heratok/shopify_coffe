@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { combineLatest } from 'rxjs';
 import { ProductService } from '../../core/services/product.service';
@@ -15,6 +15,7 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
   standalone: true,
   imports: [
     CommonModule,
+    RouterLink,
     ProductCardComponent,
     ProductCardSkeletonComponent,
     HeaderComponent,
@@ -149,6 +150,11 @@ export class ProductsComponent implements OnInit {
 
   clearWheelFilter(): void {
     const queryParams = this.searchTerm ? { q: this.searchTerm } : {};
+    this.router.navigate(['/products'], { queryParams });
+  }
+
+  clearSearch(): void {
+    const queryParams = this.wheel ? { wheel: this.wheel } : {};
     this.router.navigate(['/products'], { queryParams });
   }
 

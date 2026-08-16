@@ -2,7 +2,31 @@
 
 <div class="orders-page">
   <div class="container">
-    <div class="empty-orders">
+    <div class="orders-heading">
+      <h1>My Orders</h1>
+      <p>Your purchase history lives here.</p>
+    </div>
+
+    <div class="orders-list" *ngIf="orders.length > 0">
+      <div class="order-card" *ngFor="let order of orders">
+        <div class="order-head">
+          <div>
+            <span class="order-number">#{{ order.number }}</span>
+            <span class="order-date">{{ formatDate(order.date) }}</span>
+          </div>
+          <span class="order-total">${{ order.total | number:'1.2-2' }}</span>
+        </div>
+        <ul class="order-items">
+          <li *ngFor="let item of order.items">
+            <span class="item-name">{{ item.name }}</span>
+            <span class="item-qty">× {{ item.quantity }}</span>
+            <span class="item-price">${{ item.price * item.quantity | number:'1.2-2' }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="empty-orders" *ngIf="orders.length === 0">
       <div class="empty-orders-content">
         <div class="empty-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -11,8 +35,8 @@
             <path d="M9 13L11 15L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h1>My Orders</h1>
-        <p>No orders yet. When you complete a purchase, your order history will appear here.</p>
+        <h2>No orders yet</h2>
+        <p>When you complete a purchase, your order history will appear here.</p>
         <a routerLink="/products" class="btn-start">
           <span>Start shopping</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

@@ -22,6 +22,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
   currentStep = 1;
   totalSteps = 3;
   loading = true;
+  successMessage: string = '';
+  orderNumber: string = '';
   private destroy$ = new Subject<void>();
 
   // Form data
@@ -90,10 +92,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
         currency: 'USD',
         onApprove: (details) => {
           const name = details?.payer?.name?.given_name || 'Customer';
-          console.log('[Checkout] Approved:', details);
+          this.successMessage = `Thank you, ${name}! Your order has been confirmed.`;
+          this.orderNumber = this.generateOrderNumber();
+          this.persistOrder();
           this.currentStep = 4; // Success step
           this.cartService.clearCart();
-          alert(`Thank you, ${name}! Your order has been confirmed.`);
         },
         onError: (err) => console.error('[Checkout] PayPal error:', err)
       });
@@ -136,6 +139,46 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
         return true; // Payment step
       default:
         return false;
+    }
+  }
+
+  private generateOrderNumber(): string {
+    return 'ORD-' + Date.now().toString().slice(-8);
+  }
+
+  private persistOrder(): void {
+    try {
+      const orders = this.getStoredOrders();
+      const order = {
+        number: this.orderNumber,
+        date: new Date().toISOString(),
+        email: this.shippingData.email,
+        items: this.cart.items.map(item => ({
+          productId: item.product.id,
+          name: item.product.name,
+          quantity: item.quantity,
+          price: item.product.price
+        })),
+        total: this.finalTotal,
+        shipping: this.shippingData
+      };
+      orders.unshift(order);
+      localStorage.setItem('brew-haven-orders', JSON.stringify(orders));
+    } catch (error) {
+      console.error('Could not persist order:', error);
+    }
+  }
+
+  private getStoredOrders(): any[] {
+    return CheckoutComponent.getStoredOrders();
+  }
+
+  static getStoredOrders(): any[] {
+    try {
+      const raw = localStorage.getItem('brew-haven-orders');
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
     }
   }
 }
