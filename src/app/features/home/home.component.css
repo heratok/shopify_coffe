@@ -617,6 +617,6 @@
 }
 
 .newsletter-success svg {
-  color: #9fce9f;
+  color: var(--color-success-light);
   flex-shrink: 0;
 }

@@ -38,7 +38,7 @@ import { SkeletonComponent } from '../skeleton/skeleton.component';
     }
     .cart-item {
       padding: 1rem;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--color-cream-line);
     }
     .item-content {
       display: flex;

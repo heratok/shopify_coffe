@@ -203,7 +203,7 @@ import { RouterLink } from '@angular/router';
     }
 
     .error-message {
-      color: #ffb4ab;
+      color: var(--color-error-light);
       font-size: var(--text-xs);
       margin-top: var(--space-2);
     }
@@ -248,7 +248,7 @@ import { RouterLink } from '@angular/router';
       justify-content: center;
       background: rgba(46, 125, 50, 0.2);
       border-radius: var(--radius-full);
-      color: #9fd6a4;
+      color: var(--color-success-light);
     }
 
     .success-icon svg {

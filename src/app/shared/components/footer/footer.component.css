@@ -323,7 +323,7 @@
   margin-top: var(--space-3);
   font-family: var(--font-family-body);
   font-size: var(--text-sm);
-  color: #9fd6a4;
+  color: var(--color-success-light);
   background: rgba(46, 125, 50, 0.22);
   border: 1px solid rgba(46, 125, 50, 0.35);
   border-radius: var(--radius-md);

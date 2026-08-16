@@ -154,7 +154,7 @@
 }
 
 .form-input.is-invalid {
-  border-color: #ffb4ab;
+  border-color: var(--color-error-light);
 }
 
 .password-wrapper {
@@ -191,7 +191,7 @@
 .error-message {
   margin-top: var(--space-1);
   font-size: var(--text-xs);
-  color: #ffb4ab;
+  color: var(--color-error-light);
   display: flex;
   align-items: center;
   gap: var(--space-1);

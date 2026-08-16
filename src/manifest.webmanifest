@@ -2,8 +2,8 @@
   "name": "Brew Haven Coffee Shop - Artisan Specialty Coffee",
   "short_name": "Brew Haven",
   "description": "Premium single-origin coffee beans, ethically sourced and freshly roasted. Order artisan specialty coffee online with free shipping over $50.",
-  "theme_color": "#5D4037",
-  "background_color": "#faf9f7",
+  "theme_color": "#241a12",
+  "background_color": "#faf6ef",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
@@ -60,22 +60,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "assets/screenshots/home.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg",
-      "form_factor": "wide",
-      "label": "Homepage of Brew Haven Coffee"
-    },
-    {
-      "src": "assets/screenshots/mobile-home.jpg",
-      "sizes": "750x1334",
-      "type": "image/jpeg",
-      "form_factor": "narrow",
-      "label": "Homepage on Mobile"
     }
   ],
   "shortcuts": [

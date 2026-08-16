@@ -88,8 +88,8 @@
 }
 
 .step-indicator {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-full);
   background: var(--color-cream-deep);
   display: flex;
@@ -541,7 +541,7 @@
 }
 
 .method-icon.paypal {
-  background: #003087;
+  background: var(--color-paypal);
   color: white;
 }
 
@@ -975,8 +975,8 @@
   }
 
   .step-indicator {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
   }
 
   .step-label {

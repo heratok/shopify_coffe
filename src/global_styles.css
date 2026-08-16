@@ -62,9 +62,12 @@ html {
 
   /* Semantic Colors */
   --color-success: #2e7d32;
+  --color-success-light: #9fd6a4;
   --color-warning: #9a6b1f;
   --color-error: #b3261e;
+  --color-error-light: #ffb4ab;
   --color-info: #4a5a7a;
+  --color-paypal: #003087;
 
   /* Neutral Colors - Warm Grayscale (kept for compatibility with inherited pages) */
   --color-gray-50: #faf7f1;
@@ -811,12 +814,38 @@ a.underline-link:hover::after {
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
+  /* Kill decorative/infinite animations only; keep functional transitions
+     (accordions, modals, hovers) at a minimal but working duration. */
+  .animate-float,
+  .animate-pulse,
+  .animate-shimmer,
+  .app-loading .steam span,
+  .app-loading .spinner,
+  .grain,
+  [class*="stagger-"] {
+    animation: none !important;
+  }
+
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep state-change transitions but shorten them to near-instant. */
+  .faq-answer,
+  .promo-form,
+  .quickview-overlay,
+  .quickview-modal,
+  .product-actions,
+  .btn-wishlist,
+  .wheel-segment,
+  .search-bar,
+  .user-dropdown,
+  .mobile-overlay,
+  .mobile-menu-toggle .toggle-bar,
+  .nav-indicator {
+    transition-duration: 1ms !important;
   }
 }
 
