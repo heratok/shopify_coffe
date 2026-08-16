@@ -1,16 +1,6 @@
 <div class="auth-page">
-  <div class="auth-background">
-    <div class="bg-gradient"></div>
-    <div class="bg-pattern"></div>
-    <div class="floating-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-    </div>
-  </div>
-
   <div class="auth-container">
-    <div class="auth-card" [@cardAnimation]>
+    <div class="auth-card">
       <div class="card-header">
         <div class="logo-icon">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +31,7 @@
                 formControlName="firstName" 
                 class="form-input"
                 placeholder="John"
+                autocomplete="given-name"
                 [class.is-invalid]="firstName?.invalid && firstName?.touched"
               >
               <div class="input-focus-line"></div>
@@ -67,6 +58,7 @@
                 formControlName="lastName" 
                 class="form-input"
                 placeholder="Doe"
+                autocomplete="family-name"
                 [class.is-invalid]="lastName?.invalid && lastName?.touched"
               >
               <div class="input-focus-line"></div>
@@ -93,6 +85,7 @@
               formControlName="email" 
               class="form-input"
               placeholder="your@email.com"
+              autocomplete="email"
               [class.is-invalid]="email?.invalid && email?.touched"
             >
             <div class="input-focus-line"></div>
@@ -119,6 +112,7 @@
               formControlName="password" 
               class="form-input"
               placeholder="Create a password"
+              autocomplete="new-password"
               [class.is-invalid]="password?.invalid && password?.touched"
             >
             <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
@@ -163,6 +157,7 @@
               formControlName="confirmPassword" 
               class="form-input"
               placeholder="Confirm your password"
+              autocomplete="new-password"
               [class.is-invalid]="confirmPassword?.invalid && confirmPassword?.touched"
             >
             <button type="button" class="toggle-password" (click)="toggleConfirmPasswordVisibility()">
@@ -223,48 +218,6 @@
 
       <div class="auth-footer">
         <p>Already have an account? <a [routerLink]="['/auth/login']" class="auth-link">Sign in</a></p>
-      </div>
-    </div>
-
-    <div class="auth-illustration">
-      <div class="illustration-content">
-        <div class="coffee-visual">
-          <div class="steam-container">
-            <div class="steam steam-1"></div>
-            <div class="steam steam-2"></div>
-            <div class="steam steam-3"></div>
-          </div>
-          <div class="coffee-cup">
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M25 35C25 35 30 75 50 75C70 75 75 35 75 35" stroke="currentColor" stroke-width="3" fill="rgba(199, 91, 57, 0.2)"/>
-              <path d="M20 30H80V35C80 55 70 70 50 70C30 70 20 55 20 35V30Z" stroke="currentColor" stroke-width="3" fill="rgba(255, 255, 255, 0.1)"/>
-              <path d="M75 40C85 40 90 45 90 50C90 60 80 65 75 65" stroke="currentColor" stroke-width="3"/>
-              <path d="M35 75L40 85H60L65 75" stroke="currentColor" stroke-width="3"/>
-            </svg>
-          </div>
-        </div>
-        <h2 class="illustration-title">Join the Club</h2>
-        <p class="illustration-text">Exclusive perks for members</p>
-        <ul class="perks-list">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 13l4 4L19 7"/>
-            </svg>
-            Early access to new roasts
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 13l4 4L19 7"/>
-            </svg>
-            Member-only discounts
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 13l4 4L19 7"/>
-            </svg>
-            Free shipping on all orders
-          </li>
-        </ul>
       </div>
     </div>
   </div>

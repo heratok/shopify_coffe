@@ -1,7 +1,9 @@
-/* Coffee Shop Global Styles - Artisan Industrial Theme */
+/* Coffee Shop Global Styles - Cupping Wheel Theme */
+/* The flavor wheel is the store; every coffee is its slice of the wheel,
+   and tasting notes are color-coded vocabulary the visitor already reads. */
 
-/* Font imports - Distinctive Typography */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Font imports - Bricolage Grotesque (display), Work Sans (body), JetBrains Mono (data) */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 /* CSS Reset & Base */
 *,
@@ -19,50 +21,69 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Root Variables - Artisan Industrial Color Palette */
+/* Root Variables - Cupping Wheel Palette */
 :root {
-  /* Primary Colors - Deep Coffee Tones */
-  --color-primary: #1a1a1a;
-  --color-primary-light: #2d2d2d;
-  --color-primary-dark: #0d0d0d;
-  
-  /* Secondary Colors - Warm Creams */
-  --color-secondary: #f5e6d3;
-  --color-secondary-light: #faf3ec;
-  --color-secondary-dark: #e8d5c4;
-  
-  /* Accent Colors - Burnt Copper/Rust */
-  --color-accent: #c75b39;
-  --color-accent-light: #d4743b;
-  --color-accent-dark: #a84a2f;
-  --color-accent-muted: rgba(199, 91, 57, 0.1);
-  
-  /* Semantic Colors */
-  --color-success: #4a7c59;
-  --color-warning: #d4a373;
-  --color-error: #c75b39;
-  --color-info: #6b7c93;
-  
-  /* Neutral Colors - Warm Grayscale */
+  /* Ground & Ink */
+  --color-cream: #faf6ef;
+  --color-cream-deep: #f1e9dc;
+  --color-cream-line: #e4d9c8;
+  --color-espresso: #241a12;
+  --color-espresso-soft: #3b2d22;
+  --color-espresso-muted: #6b5a4d;
   --color-white: #ffffff;
-  --color-black: #0d0d0d;
-  --color-gray-50: #faf9f7;
-  --color-gray-100: #f5f3f0;
-  --color-gray-200: #e8e4df;
-  --color-gray-300: #d4cec7;
-  --color-gray-400: #a8a29e;
-  --color-gray-500: #78716c;
-  --color-gray-600: #57534e;
-  --color-gray-700: #44403c;
-  --color-gray-800: #292524;
-  --color-gray-900: #1c1917;
-  
-  /* Typography - Distinctive Fonts */
-  --font-family-display: 'Space Grotesk', sans-serif;
-  --font-family-heading: 'Playfair Display', serif;
-  --font-family-body: 'Space Grotesk', sans-serif;
+  --color-black: #140e08;
+
+  /* Wheel Hues - flavor families as product-identity colors */
+  --wheel-floral: #8e7cc3;
+  --wheel-fruity: #e69138;
+  --wheel-sour: #d9a441;
+  --wheel-green: #6a9a4e;
+  --wheel-roasty: #6b4226;
+  --wheel-spicy: #c8462c;
+  --wheel-nutty: #b07a3e;
+  --wheel-cocoa: #5c4033;
+  --wheel-sweet: #d96c8f;
+
+  /* Primary Colors - Espresso Ink */
+  --color-primary: #241a12;
+  --color-primary-light: #3b2d22;
+  --color-primary-dark: #140e08;
+
+  /* Secondary Colors - Warm Creams */
+  --color-secondary: #f1e9dc;
+  --color-secondary-light: #faf6ef;
+  --color-secondary-dark: #e4d9c8;
+
+  /* Accent Colors - Spicy Red (highlights/chips/lines; bold on cream) */
+  --color-accent: #c8462c;
+  --color-accent-light: #d96a48;
+  --color-accent-dark: #a8351f;
+  --color-accent-muted: rgba(200, 70, 44, 0.12);
+
+  /* Semantic Colors */
+  --color-success: #2e7d32;
+  --color-warning: #9a6b1f;
+  --color-error: #b3261e;
+  --color-info: #4a5a7a;
+
+  /* Neutral Colors - Warm Grayscale (kept for compatibility with inherited pages) */
+  --color-gray-50: #faf7f1;
+  --color-gray-100: #f4efe6;
+  --color-gray-200: #e7dfd1;
+  --color-gray-300: #d3c8b6;
+  --color-gray-400: #a99b88;
+  --color-gray-500: #7c6f60;
+  --color-gray-600: #5c5145;
+  --color-gray-700: #443c34;
+  --color-gray-800: #2c2721;
+  --color-gray-900: #1c1813;
+
+  /* Typography - Cupping Wheel Fonts */
+  --font-family-display: 'Bricolage Grotesque', sans-serif;
+  --font-family-heading: 'Bricolage Grotesque', sans-serif;
+  --font-family-body: 'Work Sans', sans-serif;
   --font-family-mono: 'JetBrains Mono', monospace;
-  
+
   /* Font Sizes - Modern Scale */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -75,7 +96,7 @@ html {
   --text-5xl: 3rem;
   --text-6xl: 3.75rem;
   --text-7xl: 4.5rem;
-  
+
   /* Spacing - 8px Base with Golden Ratio */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -90,34 +111,34 @@ html {
   --space-20: 5rem;
   --space-24: 6rem;
   --space-32: 8rem;
-  
+
   /* Layout */
   --header-height: 72px;
   --container-max-width: 1400px;
   --container-padding: var(--space-6);
-  
-  /* Border Radius - Asymmetric */
+
+  /* Border Radius - Cards at 16px */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
-  
-  /* Shadows - Dramatic & Layered */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-  --shadow-accent: 0 4px 20px rgba(199, 91, 57, 0.3);
-  
+
+  /* Shadows - Warm-tinted */
+  --shadow-sm: 0 1px 2px rgba(36, 26, 18, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(36, 26, 18, 0.08), 0 2px 4px -2px rgba(36, 26, 18, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(36, 26, 18, 0.1), 0 4px 6px -4px rgba(36, 26, 18, 0.06);
+  --shadow-xl: 0 20px 25px -5px rgba(36, 26, 18, 0.12), 0 8px 10px -6px rgba(36, 26, 18, 0.08);
+  --shadow-2xl: 0 25px 50px -12px rgba(36, 26, 18, 0.25);
+  --shadow-inner: inset 0 2px 4px rgba(36, 26, 18, 0.06);
+  --shadow-accent: 0 4px 16px rgba(200, 70, 44, 0.3);
+
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slower: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Z-Index Scale */
   --z-dropdown: 100;
   --z-sticky: 200;
@@ -133,8 +154,8 @@ body {
   font-family: var(--font-family-body);
   font-size: var(--text-base);
   line-height: 1.6;
-  color: var(--color-gray-900);
-  background-color: var(--color-gray-50);
+  color: var(--color-espresso);
+  background-color: var(--color-cream);
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -144,7 +165,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--color-primary);
+  color: var(--color-espresso);
   letter-spacing: -0.02em;
 }
 
@@ -176,18 +197,18 @@ h6 {
 
 p {
   margin-bottom: var(--space-4);
-  color: var(--color-gray-600);
+  color: var(--color-espresso-muted);
 }
 
 a {
-  color: var(--color-accent);
+  color: var(--color-espresso);
   text-decoration: none;
   transition: color var(--transition-fast);
   position: relative;
 }
 
 a:hover {
-  color: var(--color-accent-dark);
+  color: var(--color-accent);
 }
 
 a.underline-link::after {
@@ -209,16 +230,16 @@ a.underline-link:hover::after {
 .display-1 {
   font-family: var(--font-family-display);
   font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1;
   letter-spacing: -0.03em;
-  color: var(--color-primary);
+  color: var(--color-espresso);
 }
 
 .display-2 {
   font-family: var(--font-family-display);
   font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
@@ -229,22 +250,20 @@ a.underline-link:hover::after {
   font-variant-numeric: tabular-nums;
 }
 
-/* Animations */
+/* Animations - scoped entrance & shimmer only */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -327,19 +346,6 @@ a.underline-link:hover::after {
   }
 }
 
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  20% { transform: translate(-15%, 5%); }
-  30% { transform: translate(7%, -25%); }
-  40% { transform: translate(-5%, 25%); }
-  50% { transform: translate(-15%, 10%); }
-  60% { transform: translate(15%, 0%); }
-  70% { transform: translate(0%, 15%); }
-  80% { transform: translate(3%, 35%); }
-  90% { transform: translate(-10%, 10%); }
-}
-
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -355,15 +361,6 @@ a.underline-link:hover::after {
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
   }
 }
 
@@ -425,12 +422,12 @@ a.underline-link:hover::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--color-primary);
+  background: var(--color-espresso);
   z-index: 9999;
 }
 
 .app-loading h2 {
-  color: var(--color-secondary);
+  color: var(--color-cream);
   font-family: var(--font-family-heading);
   font-size: var(--text-2xl);
   margin: var(--space-6) 0;
@@ -470,7 +467,7 @@ a.underline-link:hover::after {
 .app-loading .steam span {
   width: 8px;
   height: 20px;
-  background: var(--color-secondary);
+  background: var(--color-cream);
   border-radius: 50%;
   opacity: 0;
   animation: steam 2s infinite;
@@ -532,7 +529,7 @@ a.underline-link:hover::after {
 
 .btn-primary {
   background-color: var(--color-primary);
-  color: var(--color-white);
+  color: var(--color-cream);
 }
 
 .btn-primary:hover {
@@ -554,10 +551,11 @@ a.underline-link:hover::after {
 .btn-accent {
   background-color: var(--color-accent);
   color: var(--color-white);
+  font-weight: 700;
 }
 
 .btn-accent:hover {
-  background-color: var(--color-accent-light);
+  background-color: var(--color-accent-dark);
   transform: translateY(-2px);
   box-shadow: var(--shadow-accent);
 }
@@ -575,11 +573,11 @@ a.underline-link:hover::after {
 
 .btn-ghost {
   background-color: transparent;
-  color: var(--color-gray-600);
+  color: var(--color-espresso-muted);
 }
 
 .btn-ghost:hover {
-  background-color: var(--color-gray-100);
+  background-color: var(--color-cream-deep);
   color: var(--color-primary);
 }
 
@@ -622,7 +620,7 @@ a.underline-link:hover::after {
   border-color: var(--color-accent-muted);
 }
 
-/* Glassmorphism */
+/* Glassmorphism - kept but not the primary language */
 .glass {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
@@ -631,7 +629,7 @@ a.underline-link:hover::after {
 }
 
 .glass-dark {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(20, 14, 8, 0.6);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -647,7 +645,7 @@ a.underline-link:hover::after {
   margin-bottom: var(--space-2);
   font-weight: 500;
   font-size: var(--text-sm);
-  color: var(--color-gray-700);
+  color: var(--color-espresso-soft);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -657,9 +655,9 @@ a.underline-link:hover::after {
   padding: var(--space-3) var(--space-4);
   font-family: var(--font-family-body);
   font-size: var(--text-base);
-  color: var(--color-gray-900);
+  color: var(--color-espresso);
   background-color: var(--color-white);
-  border: 2px solid var(--color-gray-200);
+  border: 2px solid var(--color-cream-line);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
 }
@@ -769,19 +767,19 @@ a.underline-link:hover::after {
   :root {
     --container-padding: var(--space-8);
   }
-  
+
   .grid-3 {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   h1 {
     font-size: var(--text-6xl);
   }
-  
+
   h2 {
     font-size: var(--text-5xl);
   }
@@ -791,11 +789,11 @@ a.underline-link:hover::after {
   :root {
     --container-padding: var(--space-12);
   }
-  
+
   .grid-3 {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .grid-4 {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -805,7 +803,7 @@ a.underline-link:hover::after {
   .grid-3 {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .grid-4 {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -841,14 +839,14 @@ a.underline-link:hover::after {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-gray-100);
+  background: var(--color-cream-deep);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-gray-400);
+  background: var(--color-espresso-soft);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gray-500);
+  background: var(--color-accent);
 }

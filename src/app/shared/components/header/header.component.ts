@@ -102,6 +102,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userMenuOpen = false;
   }
 
+  onSearch(term: string): void {
+    const trimmed = (term || '').trim();
+    if (!trimmed) {
+      this.searchOpen = false;
+      return;
+    }
+    this.router.navigate(['/products'], { queryParams: { q: trimmed } });
+    this.searchOpen = false;
+  }
+
   toggleUserMenu(event: Event) {
     event.stopPropagation();
     this.userMenuOpen = !this.userMenuOpen;

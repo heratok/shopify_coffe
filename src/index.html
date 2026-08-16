@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,8 +38,8 @@
     <!-- Theme and Favicon -->
     <meta name="theme-color" content="#5D4037">
     <meta name="msapplication-TileColor" content="#5D4037">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a1a1a'/%3E%3Cpath d='M9 12h10c1.1 0 2 .9 2 2v3c0 2.8-2.2 5-5 5h-4c-2.8 0-5-2.2-5-5v-3c0-1.1.9-2 2-2z' fill='none' stroke='%23c75b39' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M19 14h1.5c1.4 0 2.5 1.1 2.5 2.5S21.9 19 20.5 19H19' fill='none' stroke='%23c75b39' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M6 23h14' stroke='%23f5e6d3' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+    <meta name="apple-mobile-web-app-title" content="Brew Haven">
     <link rel="manifest" href="manifest.webmanifest">
     
     <!-- Preconnect to External Domains -->
@@ -52,16 +53,13 @@
     <link rel="dns-prefetch" href="https://www.paypal.com">
     
     <!-- Preload Critical Fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" as="style">
     
     <!-- Preload Critical CSS -->
-    <link rel="preload" href="global_styles.css" as="style">
+    <!-- global_styles.css is bundled by the build (angular.json styles); no preload needed -->
     
     <!-- Preload Critical JavaScript -->
     <link rel="modulepreload" href="main.js">
-    
-    <!-- Base URL -->
-    <base href="/">
     
     <!-- Structured Data / Schema.org -->
     <script type="application/ld+json">

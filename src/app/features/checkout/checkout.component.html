@@ -63,7 +63,7 @@
         <!-- Main Content Area -->
         <div class="main-content">
           <!-- Step 1: Shipping Information -->
-          <div class="checkout-step" *ngIf="currentStep === 1" [@stepAnimation]>
+          <div class="checkout-step" *ngIf="currentStep === 1">
             <div class="step-header">
               <h2>Shipping Information</h2>
               <p>Enter your delivery details</p>
@@ -135,7 +135,7 @@
           </div>
 
           <!-- Step 2: Review Order -->
-          <div class="checkout-step" *ngIf="currentStep === 2" [@stepAnimation]>
+          <div class="checkout-step" *ngIf="currentStep === 2">
             <div class="step-header">
               <h2>Review Your Order</h2>
               <p>Verify your items and shipping details</p>
@@ -193,7 +193,7 @@
           </div>
 
           <!-- Step 3: Payment -->
-          <div class="checkout-step" *ngIf="currentStep === 3" [@stepAnimation]>
+          <div class="checkout-step" *ngIf="currentStep === 3">
             <div class="step-header">
               <h2>Payment</h2>
               <p>Secure payment via PayPal</p>
@@ -237,7 +237,7 @@
           </div>
 
           <!-- Step 4: Success -->
-          <div class="checkout-step success-step" *ngIf="currentStep === 4" [@stepAnimation]>
+          <div class="checkout-step success-step" *ngIf="currentStep === 4">
             <div class="success-content">
               <div class="success-icon">
                 <div class="success-circle">

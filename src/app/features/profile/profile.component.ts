@@ -16,13 +16,13 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
     <div class="profile-page">
       <div class="container">
         <div class="profile-content">
-          <h1>Mi Perfil</h1>
+          <h1>My Profile</h1>
           
           <div class="profile-info" *ngIf="currentUser">
             <div class="info-group">
-              <h3>Información Personal</h3>
+              <h3>Personal Information</h3>
               <div class="info-item">
-                <label>Nombre:</label>
+                <label>Name:</label>
                 <span>{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
               </div>
               <div class="info-item">
@@ -33,16 +33,15 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
             
             <div class="profile-actions">
               <button class="btn btn-primary" (click)="editProfile()">
-                Editar Perfil
+                Edit Profile
               </button>
             </div>
           </div>
           
           <div class="orders-section">
-            <h3>Mis Pedidos</h3>
-            <!-- Aquí irá la lista de pedidos -->
+            <h3>My Orders</h3>
             <p class="no-orders" *ngIf="!hasOrders">
-              Aún no tienes pedidos realizados.
+              You have no orders yet.
             </p>
           </div>
         </div>
@@ -57,64 +56,83 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      background: var(--color-cream);
     }
-    
+
     .container {
-      padding: var(--space-xl) var(--space-md);
+      padding: var(--space-8) var(--space-6);
     }
-    
+
     .profile-content {
       max-width: 800px;
       margin: 0 auto;
     }
-    
+
     h1 {
-      margin-bottom: var(--space-xl);
+      margin-bottom: var(--space-8);
+      color: var(--color-espresso);
     }
-    
+
     .profile-info {
       background-color: var(--color-white);
-      border-radius: var(--border-radius-lg);
-      padding: var(--space-xl);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: var(--space-xl);
+      border: 1px solid var(--color-cream-line);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--space-8);
     }
-    
+
     .info-group {
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-6);
     }
-    
+
     .info-group h3 {
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-sm);
-      border-bottom: 1px solid var(--color-gray-200);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-cream-line);
+      color: var(--color-espresso);
     }
-    
+
     .info-item {
       display: flex;
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-4);
     }
-    
+
     .info-item label {
       font-weight: 600;
       width: 120px;
+      color: var(--color-espresso-soft);
     }
-    
+
+    .info-item span {
+      color: var(--color-espresso);
+      font-family: var(--font-family-mono);
+    }
+
     .profile-actions {
-      margin-top: var(--space-lg);
+      margin-top: var(--space-6);
     }
-    
+
     .orders-section {
       background-color: var(--color-white);
-      border-radius: var(--border-radius-lg);
-      padding: var(--space-xl);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--color-cream-line);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
     }
-    
+
+    .orders-section h3 {
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-cream-line);
+      color: var(--color-espresso);
+    }
+
     .no-orders {
       text-align: center;
-      color: var(--color-gray-600);
-      padding: var(--space-xl) 0;
+      color: var(--color-espresso-muted);
+      padding: var(--space-8) 0;
+      margin: 0;
     }
   `]
 })
@@ -131,7 +149,7 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile() {
-    // Implementar la lógica de edición de perfil
-    console.log('Editar perfil');
+    // TODO: implement profile editing
+    console.log('Edit profile');
   }
 }

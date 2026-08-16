@@ -53,7 +53,6 @@
                   formControlName="name" 
                   placeholder="How should we address you?"
                   [class.is-invalid]="name?.invalid && name?.touched">
-                <div class="input-line"></div>
               </div>
               <div class="error-message" *ngIf="name?.invalid && name?.touched">
                 <span *ngIf="name?.errors?.['required']">Please tell us your name</span>
@@ -72,8 +71,8 @@
                   type="email" 
                   formControlName="email" 
                   placeholder="your@email.com"
+                  autocomplete="email"
                   [class.is-invalid]="email?.invalid && email?.touched">
-                <div class="input-line"></div>
               </div>
               <div class="error-message" *ngIf="email?.invalid && email?.touched">
                 <span *ngIf="email?.errors?.['required']">We need your email to respond</span>
@@ -95,7 +94,6 @@
                   <option value="wholesale">Wholesale</option>
                   <option value="other">Something Else</option>
                 </select>
-                <div class="input-line"></div>
               </div>
               <div class="error-message" *ngIf="subject?.invalid && subject?.touched">
                 <span *ngIf="subject?.errors?.['required']">Please select a topic</span>
@@ -114,7 +112,6 @@
                   rows="5"
                   placeholder="Tell us what's on your mind..."
                   [class.is-invalid]="message?.invalid && message?.touched"></textarea>
-                <div class="input-line"></div>
               </div>
               <div class="error-message" *ngIf="message?.invalid && message?.touched">
                 <span *ngIf="message?.errors?.['required']">Don't forget your message</span>

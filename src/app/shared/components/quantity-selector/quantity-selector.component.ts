@@ -26,19 +26,21 @@ import { CommonModule } from '@angular/common';
     .quantity-selector {
       display: flex;
       align-items: center;
-      height: 38px;
-      border: 1px solid var(--color-gray-300);
-      border-radius: var(--border-radius-sm);
+      height: 44px;
+      border: 1px solid var(--color-cream-line);
+      border-radius: var(--radius-md);
       overflow: hidden;
+      background: var(--color-white);
     }
     
     .quantity-btn {
-      width: 38px;
-      height: 38px;
-      background-color: var(--color-gray-100);
+      width: 44px;
+      height: 44px;
+      background-color: var(--color-cream-deep);
       border: none;
       font-size: 1.2rem;
       font-weight: 600;
+      color: var(--color-espresso);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -47,7 +49,7 @@ import { CommonModule } from '@angular/common';
     }
     
     .quantity-btn:hover:not(:disabled) {
-      background-color: var(--color-gray-200);
+      background-color: var(--color-cream-line);
     }
     
     .quantity-btn:disabled {
@@ -56,10 +58,12 @@ import { CommonModule } from '@angular/common';
     }
     
     .quantity-value {
-      width: 40px;
+      width: 44px;
       text-align: center;
       font-weight: 600;
       font-size: 1rem;
+      font-family: var(--font-family-mono);
+      color: var(--color-espresso);
     }
   `]
 })

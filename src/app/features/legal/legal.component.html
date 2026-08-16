@@ -1,0 +1,19 @@
+<app-header></app-header>
+
+<div class="legal-page">
+  <div class="container">
+    <div class="legal-content" *ngIf="page">
+      <div class="legal-header">
+        <h1>{{ page.heading }}</h1>
+        <p class="legal-intro">{{ page.intro }}</p>
+      </div>
+
+      <div class="legal-section" *ngFor="let section of page.sections">
+        <h2>{{ section.title }}</h2>
+        <p>{{ section.body }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

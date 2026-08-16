@@ -67,14 +67,43 @@ export class ProductDetailComponent implements OnInit {
     this.activeTab = tab;
   }
 
+  Math = Math;
+
+  getStars(): number[] {
+    return [1, 2, 3, 4, 5];
+  }
+
+  getFamilyFromNote(note: string): string {
+    const n = note.toLowerCase();
+    const rules: Array<[RegExp, string]> = [
+      [/floral|bergamot|jasmine|rose|lavender|citrus/, 'floral'],
+      [/blackcurrant|wine|berry|apple|cherry|fruit|stone/, 'fruity'],
+      [/sour|vinegary|tart/, 'sour'],
+      [/earthy|herbal|hay|grassy|green/, 'green'],
+      [/roast|smoky|ashy|pipe|tobacco/, 'roasty'],
+      [/spice|pepper|pimento|pungent/, 'spicy'],
+      [/nut|almond|hazelnut|walnut|peanut|caramel/, 'nutty'],
+      [/chocolate|cocoa|mocha/, 'cocoa'],
+      [/sweet|sugar|honey|syrup|vanilla/, 'sweet']
+    ];
+    for (const [re, family] of rules) {
+      if (re.test(n)) return family;
+    }
+    return 'nutty';
+  }
+
+  getNoteColor(note: string): string {
+    return 'var(--wheel-' + this.getFamilyFromNote(note) + ')';
+  }
+
   getRoastColor(roastLevel: string): string {
     const colors: { [key: string]: string } = {
-      'Light': '#d4a574',
-      'Medium-Light': '#c4956a',
-      'Medium': '#a67c52',
-      'Medium-Dark': '#8b6914',
-      'Dark': '#5d4037'
+      'Light': 'var(--color-cream-line)',
+      'Medium-Light': 'var(--color-gray-300)',
+      'Medium': 'var(--color-espresso-muted)',
+      'Medium-Dark': 'var(--color-espresso-soft)',
+      'Dark': 'var(--color-espresso)'
     };
-    return colors[roastLevel] || '#a67c52';
+    return colors[roastLevel] || 'var(--color-espresso-muted)';
   }
 }

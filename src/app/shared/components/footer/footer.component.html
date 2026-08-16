@@ -62,7 +62,6 @@
           <li><a routerLink="/products">Shop</a></li>
           <li><a routerLink="/about">About Us</a></li>
           <li><a routerLink="/contact">Contact</a></li>
-          <li><a routerLink="/blog">Blog</a></li>
         </ul>
       </div>
 
@@ -74,7 +73,6 @@
           <li><a routerLink="/products/category/blends">Blends</a></li>
           <li><a routerLink="/products/category/espresso">Espresso</a></li>
           <li><a routerLink="/products/category/decaf">Decaf</a></li>
-          <li><a routerLink="/products/category/subscriptions">Subscriptions</a></li>
         </ul>
       </div>
 
@@ -97,6 +95,7 @@
             </svg>
           </button>
         </form>
+        <p class="newsletter-success" *ngIf="newsletterSuccess">Thanks — you're on the list.</p>
       </div>
     </div>
 

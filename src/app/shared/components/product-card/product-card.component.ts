@@ -26,8 +26,8 @@ import { ImageService } from '../../../core/services/image.service';
       <div class="product-image-wrapper">
         <a [routerLink]="['/products', product.id]" class="product-image-link">
           <div class="product-image">
-            <img 
-              [src]="imageUrl" 
+            <img
+              [src]="imageUrl"
               [alt]="product.name"
               loading="lazy"
               (load)="imageLoaded = true"
@@ -40,8 +40,8 @@ import { ImageService } from '../../../core/services/image.service';
 
         <!-- Hover Actions -->
         <div class="product-actions" *ngIf="product.inStock">
-          <button 
-            class="btn-action btn-quick-view" 
+          <button
+            class="btn-action btn-quick-view"
             (click)="onQuickView()"
             aria-label="Quick view">
             <svg viewBox="0 0 24 24" fill="none" class="action-icon">
@@ -50,8 +50,8 @@ import { ImageService } from '../../../core/services/image.service';
             </svg>
             <span>Quick View</span>
           </button>
-          <button 
-            class="btn-action btn-add-cart" 
+          <button
+            class="btn-action btn-add-cart"
             (click)="onAddToCart()"
             aria-label="Add to cart">
             <svg viewBox="0 0 24 24" fill="none" class="action-icon">
@@ -65,18 +65,18 @@ import { ImageService } from '../../../core/services/image.service';
         </div>
 
         <!-- Wishlist Button -->
-        <button 
-          class="btn-wishlist" 
+        <button
+          class="btn-wishlist"
           [class.active]="isWishlisted"
           (click)="toggleWishlist()"
           aria-label="Add to wishlist">
           <svg viewBox="0 0 24 24" fill="none" class="wishlist-icon">
-            <path 
-              d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" 
+            <path
+              d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
               [attr.fill]="isWishlisted ? 'currentColor' : 'none'"
-              stroke="currentColor" 
-              stroke-width="2" 
-              stroke-linecap="round" 
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
               stroke-linejoin="round"/>
           </svg>
         </button>
@@ -104,9 +104,9 @@ import { ImageService } from '../../../core/services/image.service';
         <!-- Rating -->
         <div class="product-rating" *ngIf="product.rating">
           <div class="stars">
-            <svg 
-              *ngFor="let star of getStars(); let i = index" 
-              viewBox="0 0 24 24" 
+            <svg
+              *ngFor="let star of getStars(); let i = index"
+              viewBox="0 0 24 24"
               class="star-icon"
               [class.filled]="i < Math.floor(product.rating)"
               [class.half]="i === Math.floor(product.rating) && product.rating % 1 !== 0">
@@ -123,7 +123,9 @@ import { ImageService } from '../../../core/services/image.service';
             <span class="amount">{{ product.price | number:'1.2-2' }}</span>
           </div>
           <div class="roast-level">
-            <span class="roast-indicator" [style.background]="getRoastColor(product.roastLevel)"></span>
+            <svg class="wheel-arc" viewBox="0 0 20 20" [attr.aria-label]="'Wheel slice: ' + getWheelFamily()">
+              <path [attr.stroke]="getWheelArcColor()" d="M10 2 A8 8 0 0 1 16.93 14"/>
+            </svg>
             <span class="roast-text">{{ product.roastLevel }}</span>
           </div>
         </div>
@@ -138,7 +140,7 @@ import { ImageService } from '../../../core/services/image.service';
 
     .product-card {
       background-color: var(--color-white);
-      border-radius: var(--radius-xl);
+      border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow-md);
       transition: all var(--transition-base);
@@ -146,14 +148,14 @@ import { ImageService } from '../../../core/services/image.service';
       height: 100%;
       display: flex;
       flex-direction: column;
-      border: 1px solid transparent;
+      border: 1px solid var(--color-cream-line);
     }
 
     .product-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: var(--radius-xl);
+      border-radius: var(--radius-lg);
       border: 2px solid transparent;
       transition: border-color var(--transition-base);
       pointer-events: none;
@@ -161,8 +163,8 @@ import { ImageService } from '../../../core/services/image.service';
     }
 
     .product-card:hover {
-      transform: translateY(-12px) scale(1.02);
-      box-shadow: var(--shadow-2xl);
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-xl);
     }
 
     .product-card:hover::before {
@@ -170,7 +172,7 @@ import { ImageService } from '../../../core/services/image.service';
     }
 
     .product-card.featured {
-      border: 2px solid var(--color-accent);
+      border: 2px solid var(--color-cream-line);
     }
 
     .product-card:not(.in-stock) {
@@ -196,9 +198,9 @@ import { ImageService } from '../../../core/services/image.service';
 
     .featured-badge {
       left: var(--space-4);
-      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+      background: var(--color-accent);
       color: var(--color-white);
-      box-shadow: 0 4px 12px rgba(199, 91, 57, 0.4);
+      box-shadow: 0 4px 12px rgba(200, 70, 44, 0.4);
     }
 
     .badge-icon {
@@ -208,8 +210,8 @@ import { ImageService } from '../../../core/services/image.service';
 
     .out-of-stock-badge {
       right: var(--space-4);
-      background-color: var(--color-gray-700);
-      color: var(--color-white);
+      background-color: var(--color-espresso);
+      color: var(--color-cream);
     }
 
     /* Image Wrapper */
@@ -228,7 +230,7 @@ import { ImageService } from '../../../core/services/image.service';
     .product-image {
       position: absolute;
       inset: 0;
-      background-color: var(--color-gray-100);
+      background-color: var(--color-cream-deep);
     }
 
     .product-image img {
@@ -256,13 +258,13 @@ import { ImageService } from '../../../core/services/image.service';
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: var(--color-gray-100);
+      background-color: var(--color-cream-deep);
     }
 
     .skeleton-loader {
       width: 60%;
       height: 60%;
-      background: linear-gradient(90deg, var(--color-gray-200) 25%, var(--color-gray-300) 50%, var(--color-gray-200) 75%);
+      background: linear-gradient(90deg, var(--color-cream-line) 25%, var(--color-cream-deep) 50%, var(--color-cream-line) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: var(--radius-md);
@@ -273,20 +275,19 @@ import { ImageService } from '../../../core/services/image.service';
       position: absolute;
       top: var(--space-4);
       right: var(--space-4);
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 255, 255, 0.9);
-      border: none;
+      background: rgba(250, 246, 239, 0.92);
+      border: 1px solid var(--color-cream-line);
       border-radius: var(--radius-full);
       cursor: pointer;
       opacity: 0;
       transform: scale(0.8);
       transition: all var(--transition-base);
       z-index: 3;
-      backdrop-filter: blur(4px);
     }
 
     .product-card:hover .btn-wishlist {
@@ -304,12 +305,13 @@ import { ImageService } from '../../../core/services/image.service';
       opacity: 1;
       transform: scale(1);
       color: var(--color-error);
+      border-color: var(--color-error);
     }
 
     .wishlist-icon {
       width: 20px;
       height: 20px;
-      color: var(--color-gray-600);
+      color: var(--color-espresso-soft);
       transition: color var(--transition-fast);
     }
 
@@ -325,7 +327,7 @@ import { ImageService } from '../../../core/services/image.service';
       left: 0;
       right: 0;
       padding: var(--space-6);
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+      background: linear-gradient(to top, rgba(20, 14, 8, 0.85) 0%, rgba(20, 14, 8, 0.35) 50%, transparent 100%);
       display: flex;
       flex-direction: column;
       gap: var(--space-3);
@@ -345,15 +347,14 @@ import { ImageService } from '../../../core/services/image.service';
       align-items: center;
       justify-content: center;
       gap: var(--space-2);
-      padding: var(--space-3) var(--space-4);
-      border: none;
+      padding: var(--space-3) var(--space-5);
+      min-height: 44px;
       border-radius: var(--radius-md);
       font-family: var(--font-family-body);
       font-size: var(--text-sm);
       font-weight: 600;
       cursor: pointer;
       transition: all var(--transition-fast);
-      backdrop-filter: blur(8px);
     }
 
     .action-icon {
@@ -362,24 +363,29 @@ import { ImageService } from '../../../core/services/image.service';
     }
 
     .btn-quick-view {
-      background: rgba(255, 255, 255, 0.95);
-      color: var(--color-primary);
+      background: rgba(250, 246, 239, 0.95);
+      color: var(--color-espresso);
+      border: 2px solid var(--color-cream-line);
     }
 
     .btn-quick-view:hover {
       background: var(--color-white);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
       transform: translateY(-2px);
     }
 
     .btn-add-cart {
-      background: var(--color-accent);
-      color: var(--color-white);
+      background: var(--color-primary);
+      color: var(--color-cream);
+      border: 2px solid var(--color-primary);
     }
 
     .btn-add-cart:hover {
-      background: var(--color-accent-light);
+      background: var(--color-primary-light);
+      border-color: var(--color-primary-light);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(199, 91, 57, 0.4);
+      box-shadow: var(--shadow-lg);
     }
 
     /* Product Info */
@@ -401,7 +407,7 @@ import { ImageService } from '../../../core/services/image.service';
 
     .category-badge {
       background-color: var(--color-accent-muted);
-      color: var(--color-accent);
+      color: var(--color-accent-dark);
       padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-sm);
       font-weight: 600;
@@ -412,12 +418,12 @@ import { ImageService } from '../../../core/services/image.service';
     .origin-dot {
       width: 4px;
       height: 4px;
-      background-color: var(--color-gray-400);
+      background-color: var(--color-cream-line);
       border-radius: var(--radius-full);
     }
 
     .origin-text {
-      color: var(--color-gray-500);
+      color: var(--color-espresso-muted);
       font-weight: 500;
     }
 
@@ -431,7 +437,7 @@ import { ImageService } from '../../../core/services/image.service';
     }
 
     .product-title a {
-      color: var(--color-primary);
+      color: var(--color-espresso);
       text-decoration: none;
       transition: color var(--transition-fast);
     }
@@ -449,8 +455,8 @@ import { ImageService } from '../../../core/services/image.service';
 
     .note-tag {
       font-size: var(--text-xs);
-      color: var(--color-gray-600);
-      background-color: var(--color-gray-100);
+      color: var(--color-espresso-soft);
+      background-color: var(--color-cream-deep);
       padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-sm);
     }
@@ -470,7 +476,8 @@ import { ImageService } from '../../../core/services/image.service';
     .star-icon {
       width: 14px;
       height: 14px;
-      color: var(--color-gray-300);
+      color: var(--color-cream-line);
+      position: relative;
     }
 
     .star-icon.filled {
@@ -478,22 +485,19 @@ import { ImageService } from '../../../core/services/image.service';
     }
 
     .star-icon.half {
-      position: relative;
-      color: var(--color-gray-300);
+      color: var(--color-accent);
     }
 
     .star-icon.half::after {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, var(--color-accent) 50%, transparent 50%);
-      -webkit-background-clip: text;
-      background-clip: text;
+      inset: 0 0 0 50%;
+      background: var(--color-white);
     }
 
     .rating-text {
       font-size: var(--text-xs);
-      color: var(--color-gray-500);
+      color: var(--color-espresso-muted);
       font-weight: 500;
     }
 
@@ -504,14 +508,15 @@ import { ImageService } from '../../../core/services/image.service';
       align-items: center;
       margin-top: auto;
       padding-top: var(--space-3);
-      border-top: 1px solid var(--color-gray-200);
+      border-top: 1px solid var(--color-cream-line);
     }
 
     .product-price {
       display: flex;
       align-items: flex-start;
       font-family: var(--font-family-mono);
-      color: var(--color-accent);
+      color: var(--color-espresso);
+      font-variant-numeric: tabular-nums;
     }
 
     .currency {
@@ -530,21 +535,37 @@ import { ImageService } from '../../../core/services/image.service';
       align-items: center;
       gap: var(--space-2);
       font-size: var(--text-xs);
-      color: var(--color-gray-600);
+      color: var(--color-espresso-soft);
     }
 
-    .roast-indicator {
-      width: 12px;
-      height: 12px;
-      border-radius: var(--radius-full);
-      border: 2px solid var(--color-white);
-      box-shadow: var(--shadow-sm);
+    /* Wheel slice - the coffee's identity arc */
+    .wheel-arc {
+      width: 16px;
+      height: 16px;
+    }
+
+    .wheel-arc path {
+      fill: none;
+      stroke-width: 4;
+      stroke-linecap: round;
     }
 
     .roast-text {
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+    }
+
+    @media (hover: none), (pointer: coarse), (max-width: 767px) {
+      .product-actions {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .btn-wishlist {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   `]
 })
@@ -570,13 +591,37 @@ export class ProductCardComponent implements OnInit {
 
   getRoastColor(roastLevel: string): string {
     const colors: { [key: string]: string } = {
-      'Light': '#d4a574',
-      'Medium-Light': '#c4956a',
-      'Medium': '#a67c52',
-      'Medium-Dark': '#8b6914',
-      'Dark': '#5d4037'
+      'Light': 'var(--wheel-fruity)',
+      'Medium-Light': 'var(--wheel-nutty)',
+      'Medium': 'var(--wheel-roasty)',
+      'Medium-Dark': 'var(--wheel-cocoa)',
+      'Dark': 'var(--color-espresso)'
     };
-    return colors[roastLevel] || '#a67c52';
+    return colors[roastLevel] || 'var(--wheel-roasty)';
+  }
+
+  getWheelFamily(): string {
+    const note = this.product.flavourNotes?.[0] || '';
+    const n = note.toLowerCase();
+    const rules: Array<[RegExp, string]> = [
+      [/floral|bergamot|jasmine|rose|lavender|citrus/, 'floral'],
+      [/blackcurrant|wine|berry|apple|cherry|fruit|stone/, 'fruity'],
+      [/sour|vinegary|tart/, 'sour'],
+      [/earthy|herbal|hay|grassy|green/, 'green'],
+      [/roast|smoky|ashy|pipe|tobacco/, 'roasty'],
+      [/spice|pepper|pimento|pungent/, 'spicy'],
+      [/nut|almond|hazelnut|walnut|peanut|caramel/, 'nutty'],
+      [/chocolate|cocoa|mocha/, 'cocoa'],
+      [/sweet|sugar|honey|syrup|vanilla/, 'sweet']
+    ];
+    for (const [re, family] of rules) {
+      if (re.test(n)) return family;
+    }
+    return 'nutty';
+  }
+
+  getWheelArcColor(): string {
+    return 'var(--wheel-' + this.getWheelFamily() + ')';
   }
 
   onAddToCart(): void {

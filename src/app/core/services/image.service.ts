@@ -19,13 +19,13 @@ export class ImageService {
   private fallbackImages: CoffeeImage[] = [
     {
       id: 'coffee-1',
-      url: 'https://images.pexels.com/photos/2252513/pexels-photo-2252513.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+      url: 'https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
       photographer: 'Chevanon Photography',
       photographerUrl: 'https://www.pexels.com/@chevanon'
     },
     {
       id: 'coffee-2',
-      url: 'https://images.pexels.com/photos/2478327/pexels-photo-2478327.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+      url: 'https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
       photographer: 'Taryn Elliott',
       photographerUrl: 'https://www.pexels.com/@taryn-elliott'
     },

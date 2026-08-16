@@ -1,11 +1,11 @@
-/* Product Detail Page - Artisan Industrial Theme */
+/* Product Detail Page - Cupping Wheel Theme */
 
 .product-detail-page {
   padding-top: var(--header-height);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--color-gray-50);
+  background: var(--color-cream);
 }
 
 /* Breadcrumbs */
@@ -15,11 +15,11 @@
   gap: var(--space-3);
   padding: var(--space-8) 0;
   font-size: var(--text-sm);
-  color: var(--color-gray-500);
+  color: var(--color-espresso-muted);
 }
 
 .breadcrumbs a {
-  color: var(--color-gray-600);
+  color: var(--color-espresso-soft);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
@@ -29,12 +29,12 @@
 }
 
 .breadcrumbs span {
-  color: var(--color-primary);
+  color: var(--color-espresso);
   font-weight: 500;
 }
 
 .breadcrumb-separator {
-  color: var(--color-gray-400);
+  color: var(--color-cream-line);
 }
 
 /* Product Detail Layout */
@@ -61,6 +61,7 @@
   overflow: hidden;
   background: var(--color-white);
   box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-cream-line);
 }
 
 .main-image img {
@@ -97,19 +98,19 @@
 
 .badge-category {
   background: var(--color-accent-muted);
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 
 .badge-origin {
-  background: var(--color-gray-100);
-  color: var(--color-gray-600);
+  background: var(--color-cream-deep);
+  color: var(--color-espresso-soft);
 }
 
 .product-title {
   font-family: var(--font-family-display);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-espresso);
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
@@ -137,7 +138,7 @@
 
 .roast-text {
   font-size: var(--text-sm);
-  color: var(--color-gray-600);
+  color: var(--color-espresso-soft);
   font-weight: 500;
 }
 
@@ -155,16 +156,30 @@
 .star-icon {
   width: 18px;
   height: 18px;
-  color: var(--color-gray-300);
+  color: var(--color-cream-line);
+  position: relative;
 }
 
 .star-icon.filled {
   color: var(--color-accent);
 }
 
+.star-icon.half {
+  color: var(--color-accent);
+}
+
+.star-icon.half::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 50%;
+  background: var(--color-cream);
+}
+
 .rating-text {
   font-size: var(--text-sm);
-  color: var(--color-gray-500);
+  color: var(--color-espresso-muted);
+  font-family: var(--font-family-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .rating-count {
@@ -180,28 +195,30 @@
   align-items: flex-start;
   gap: var(--space-2);
   padding: var(--space-4) 0;
-  border-top: 1px solid var(--color-gray-200);
-  border-bottom: 1px solid var(--color-gray-200);
+  border-top: 1px solid var(--color-cream-line);
+  border-bottom: 1px solid var(--color-cream-line);
 }
 
 .price-currency {
   font-family: var(--font-family-mono);
   font-size: var(--text-xl);
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-espresso);
 }
 
 .price-amount {
   font-family: var(--font-family-mono);
   font-size: var(--text-4xl);
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-espresso);
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .price-unit {
   font-size: var(--text-sm);
-  color: var(--color-gray-500);
+  color: var(--color-espresso-muted);
+  font-family: var(--font-family-mono);
   margin-left: var(--space-2);
 }
 
@@ -209,10 +226,10 @@
 .product-description {
   font-size: var(--text-base);
   line-height: 1.8;
-  color: var(--color-gray-600);
+  color: var(--color-espresso-soft);
 }
 
-/* Flavor Notes */
+/* Flavor Notes - wheel-colored chips */
 .flavor-notes {
   margin: var(--space-4) 0;
 }
@@ -222,7 +239,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-gray-700);
+  color: var(--color-espresso-soft);
   margin-bottom: var(--space-3);
 }
 
@@ -233,12 +250,25 @@
 }
 
 .tag {
-  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-light) 100%);
-  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-white);
+  border: 1px solid var(--color-cream-line);
+  color: var(--color-espresso-soft);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-full);
   font-size: var(--text-sm);
   font-weight: 500;
+}
+
+.tag::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--tag-hue, var(--color-accent));
+  flex-shrink: 0;
 }
 
 /* Product Actions */
@@ -258,7 +288,7 @@
 .quantity-label {
   font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--color-gray-700);
+  color: var(--color-espresso-soft);
 }
 
 .add-to-cart-btn {
@@ -267,9 +297,10 @@
   justify-content: center;
   gap: var(--space-3);
   width: 100%;
+  min-height: 52px;
   padding: var(--space-4) var(--space-8);
-  background: var(--color-accent);
-  color: var(--color-white);
+  background: var(--color-espresso);
+  color: var(--color-cream);
   border: none;
   border-radius: var(--radius-md);
   font-family: var(--font-family-body);
@@ -282,13 +313,13 @@
 }
 
 .add-to-cart-btn:hover:not(:disabled) {
-  background: var(--color-accent-light);
+  background: var(--color-espresso-soft);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-accent);
+  box-shadow: var(--shadow-lg);
 }
 
 .add-to-cart-btn:disabled {
-  background: var(--color-gray-400);
+  background: var(--color-espresso-muted);
   cursor: not-allowed;
 }
 
@@ -304,6 +335,7 @@
   gap: var(--space-4);
   padding: var(--space-6);
   background: var(--color-white);
+  border: 1px solid var(--color-cream-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
 }
@@ -339,7 +371,7 @@
 
 .shipping-text {
   font-size: var(--text-sm);
-  color: var(--color-gray-600);
+  color: var(--color-espresso-soft);
   font-weight: 500;
 }
 
@@ -347,6 +379,7 @@
 .product-tabs {
   margin-top: var(--space-16);
   background: var(--color-white);
+  border: 1px solid var(--color-cream-line);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   overflow: hidden;
@@ -354,8 +387,8 @@
 
 .tabs-header {
   display: flex;
-  border-bottom: 1px solid var(--color-gray-200);
-  background: var(--color-gray-50);
+  border-bottom: 1px solid var(--color-cream-line);
+  background: var(--color-cream);
 }
 
 .tab-btn {
@@ -368,15 +401,15 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-gray-500);
+  color: var(--color-espresso-muted);
   cursor: pointer;
   transition: all var(--transition-fast);
   position: relative;
 }
 
 .tab-btn:hover {
-  color: var(--color-primary);
-  background: var(--color-gray-100);
+  color: var(--color-espresso);
+  background: var(--color-cream-deep);
 }
 
 .tab-btn.active {
@@ -402,7 +435,7 @@
   font-family: var(--font-family-heading);
   font-size: var(--text-xl);
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-espresso);
   margin-bottom: var(--space-6);
 }
 
@@ -418,22 +451,23 @@
 }
 
 .details-table tr:hover {
-  background: var(--color-gray-50);
+  background: var(--color-cream);
 }
 
 .details-table td {
   padding: var(--space-4) var(--space-6);
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid var(--color-cream-line);
 }
 
 .details-table td:first-child {
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-espresso);
   width: 35%;
 }
 
 .details-table td:last-child {
-  color: var(--color-gray-600);
+  color: var(--color-espresso-soft);
+  font-family: var(--font-family-mono);
 }
 
 /* Brewing Methods */
@@ -450,7 +484,8 @@
 }
 
 .brewing-method {
-  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-light) 100%);
+  background: var(--color-cream);
+  border: 1px solid var(--color-cream-line);
   padding: var(--space-6);
   border-radius: var(--radius-lg);
   transition: all var(--transition-base);
@@ -465,12 +500,12 @@
   font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-espresso);
   margin-bottom: var(--space-3);
 }
 
 .brewing-method p {
-  color: var(--color-gray-600);
+  color: var(--color-espresso-soft);
   line-height: 1.6;
   font-size: var(--text-sm);
 }
@@ -480,7 +515,8 @@
   text-align: center;
   margin-bottom: var(--space-8);
   padding: var(--space-8);
-  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-light) 100%);
+  background: var(--color-cream);
+  border: 1px solid var(--color-cream-line);
   border-radius: var(--radius-xl);
 }
 
@@ -495,8 +531,9 @@
   font-family: var(--font-family-display);
   font-size: var(--text-6xl);
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-espresso);
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .rating-stars {
@@ -509,9 +546,13 @@
   height: 24px;
 }
 
+.rating-stars .star-icon.half::after {
+  background: var(--color-cream);
+}
+
 .rating-count {
   font-size: var(--text-sm);
-  color: var(--color-gray-600);
+  color: var(--color-espresso-muted);
 }
 
 .reviews-list {
@@ -522,7 +563,8 @@
 
 .review {
   padding: var(--space-6);
-  background: var(--color-gray-50);
+  background: var(--color-cream);
+  border: 1px solid var(--color-cream-line);
   border-radius: var(--radius-lg);
   transition: all var(--transition-base);
 }
@@ -544,32 +586,37 @@
   align-items: center;
   gap: var(--space-3);
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-espresso);
 }
 
 .reviewer-avatar {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+  background: var(--color-espresso);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-family-heading);
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--color-cream);
 }
 
 .review-date {
   font-size: var(--text-sm);
-  color: var(--color-gray-400);
+  color: var(--color-espresso-muted);
+  font-family: var(--font-family-mono);
 }
 
 .review-rating {
   margin-bottom: var(--space-3);
 }
 
+.review-rating svg {
+  color: var(--color-accent);
+}
+
 .review-content {
   line-height: 1.7;
-  color: var(--color-gray-600);
+  color: var(--color-espresso-soft);
 }

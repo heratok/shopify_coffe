@@ -44,6 +44,28 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/register/register.component').then(c => c.RegisterComponent)
   },
   {
+    path: 'profile',
+    loadComponent: () => import('./features/profile/profile.component').then(c => c.ProfileComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'orders',
+    loadComponent: () => import('./features/orders/orders.component').then(c => c.OrdersComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'privacy-policy',
+    loadComponent: () => import('./features/legal/legal.component').then(c => c.LegalComponent)
+  },
+  {
+    path: 'terms-of-service',
+    loadComponent: () => import('./features/legal/legal.component').then(c => c.LegalComponent)
+  },
+  {
+    path: 'shipping-info',
+    loadComponent: () => import('./features/legal/legal.component').then(c => c.LegalComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }
