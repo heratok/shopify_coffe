@@ -46,3 +46,19 @@ Thumbs.db
 # Archivos específicos de Angular
 /src/environments/environment.ts
 /src/environments/environment.prod.ts
+# Artefactos locales de herramientas (impeccable, playwright, atl)
+/.atl/
+/.impeccable/
+/.playwright-cli/
+/screenshots/
+/desktop-products.png
+/footer-bottom.png
+/header-scrolled-products.png
+/home-desktop.png
+/home-mobile.png
+/legal-privacy.png
+/mobile-products.png
+/orders-empty.png
+/product-detail-2.png
+/products-detail.png
+
